@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".fragment.LoginFragment">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button"
+        android:layout_width="265dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/helvetica_regular"
+        android:foregroundGravity="center"
+        android:text="@string/continue_f"
+        android:textColor="@color/black"
+        app:backgroundTint="#D5E8D4"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/phoneButton"
+        app:layout_constraintEnd_toEndOf="@+id/emailInput"
+        app:layout_constraintStart_toStartOf="@+id/emailInput"
+        app:layout_constraintTop_toBottomOf="@+id/emailInput"
+        app:layout_constraintVertical_bias="0.197"
+        app:strokeColor="#82B366"
+        app:strokeWidth="2dp" />
+
+    <EditText
+        android:id="@+id/emailInput"
+        android:layout_width="275dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="340dp"
+        android:ems="10"
+        android:fontFamily="@font/helvetica_regular"
+        android:foregroundGravity="center"
+        android:hint="@string/enter_email"
+        android:inputType="text|textEmailAddress"
+        android:textColor="@color/black"
+        android:textColorHint="#656565"
+        app:layout_constraintEnd_toEndOf="@+id/lets_start"
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintStart_toStartOf="@+id/lets_start"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/phoneButton"
+        android:layout_width="265dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/helvetica_regular"
+        android:foregroundGravity="center"
+        android:text="@string/phone_login"
+        android:textColor="@color/white"
+        app:backgroundTint="#666666"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/googleSignIn"
+        app:layout_constraintEnd_toEndOf="@+id/button"
+        app:layout_constraintStart_toStartOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/emailInput"
+        app:layout_constraintVertical_bias="0.914"
+        app:strokeColor="#4D4D4D" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/googleSignIn"
+        android:layout_width="265dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="116dp"
+        android:fontFamily="@font/helvetica_regular"
+        android:foregroundGravity="center"
+        android:text="@string/google_sign_in"
+        android:textColor="@color/white"
+        app:backgroundTint="#666666"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/phoneButton"
+        app:layout_constraintStart_toStartOf="@+id/phoneButton"
+        app:strokeColor="#4D4D4D" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="2dp"
+        android:contentDescription="GoogleImage"
+        android:foregroundGravity="center"
+        android:src="@mipmap/google_icon_foreground"
+        app:layout_constraintBottom_toBottomOf="@+id/googleSignIn"
+        app:layout_constraintStart_toStartOf="@+id/googleSignIn"
+        app:layout_constraintTop_toTopOf="@+id/googleSignIn" />
+
+    <TextView
+        android:id="@+id/by_continuing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:text="@string/by_continuing"
+        android:textColor="@color/grayCustom3"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/googleSignIn"
+        app:layout_constraintStart_toStartOf="@+id/googleSignIn"
+        app:layout_constraintTop_toBottomOf="@+id/googleSignIn"
+        app:layout_constraintVertical_bias="0.597" />
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dinpro_medium"
+        android:foregroundGravity="center"
+        android:text="@string/welcome"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/emailInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.504" />
+
+    <TextView
+        android:id="@+id/lets_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dinpro_medium"
+        android:foregroundGravity="center"
+        android:text="@string/lest_start"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/emailInput"
+        app:layout_constraintEnd_toEndOf="@+id/welcome"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/welcome"
+        app:layout_constraintTop_toBottomOf="@+id/welcome"
+        app:layout_constraintVertical_bias="0.869" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

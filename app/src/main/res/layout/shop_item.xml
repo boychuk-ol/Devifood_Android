@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shopCardBackground"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/shopCard"
+        android:layout_width="250dp"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        android:orientation="vertical"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="20dp"
+        app:strokeColor="#000000"
+        app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:id="@+id/shopCardLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/shopImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:id="@+id/upperLayout"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/shopName"
+                    android:layout_width="142dp"
+                    android:layout_height="wrap_content"
+                    android:text="shop"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/shopCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="category"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lowerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/rating"
+                    android:layout_width="148dp"
+                    android:layout_height="wrap_content"
+                    android:text="rating"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="reviews"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

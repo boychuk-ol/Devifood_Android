@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView1"
+    android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:id="@+id/shopList1Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="35dp"
+            android:text="Supermarkets"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/shopList1"
+            android:layout_width="match_parent"
+            android:layout_height="315dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shopList1Title" />
+
+        <TextView
+            android:id="@+id/shopList2Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="Fast-food"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/shopList1"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="20dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/shopList2"
+            android:layout_width="match_parent"
+            android:layout_height="315dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shopList2Title" />
+
+        <TextView
+            android:id="@+id/shopList3Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="Pizza"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/shopList2"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="20dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/shopList3"
+            android:layout_width="match_parent"
+            android:layout_height="315dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shopList3Title" />
+
+        <TextView
+            android:id="@+id/shopList4Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="National cuisine"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/shopList3"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="20dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/shopList4"
+            android:layout_width="match_parent"
+            android:layout_height="315dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shopList4Title" />
+
+        <TextView
+            android:id="@+id/shopList5Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="Shawarma"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/shopList4"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="20dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/shopList5"
+            android:layout_width="match_parent"
+            android:layout_height="315dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shopList5Title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

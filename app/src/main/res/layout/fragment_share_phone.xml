@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/share_data"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".fragment.SharePhoneFragment">
+
+    <TextView
+        android:id="@+id/titlePhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_phone"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.346" />
+
+    <EditText
+        android:id="@+id/phoneInput"
+        android:layout_width="230dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="-15dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+        android:hint="@string/phone"
+        android:inputType="phone"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/later"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titlePhone"
+        app:layout_constraintVertical_bias="0.118" />
+
+    <Button
+        android:id="@+id/codeSender"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="235dp"
+        android:backgroundTint="@color/customPurple"
+        android:text="@string/send_code"
+        android:textColor="@color/white"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/later"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneInput"
+        app:layout_constraintVertical_bias="0.269" />
+
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/phoneCode"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="5dp"
+        android:paddingTop="4dp"
+        app:ccpDialog_backgroundColor="@color/white"
+        app:ccp_autoDetectCountry="true"
+        app:ccp_showFlag="true"
+        app:ccp_showFullName="false"
+        app:ccp_showNameCode="false"
+        app:ccp_textGravity="CENTER"
+        app:layout_constraintBottom_toBottomOf="@+id/phoneInput"
+        app:layout_constraintEnd_toStartOf="@+id/phoneInput"
+        app:layout_constraintHorizontal_bias="0.896"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/phoneInput"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/later"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/grayCustom2"
+        android:text="@string/later"
+        android:textColor="@color/grayCustom3"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/grayCustom"
+        app:strokeWidth="2dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
