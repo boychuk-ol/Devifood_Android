@@ -1,12 +1,12 @@
 <?php
 
-    require_once(dirname(__FILE__, 3).'/DbOrderRepository.php');
-    require_once(dirname(__FILE__, 3).'/DbClientRepository.php');
-    require_once(dirname(__FILE__, 3).'/DbCourierRepository.php');
-    require_once(dirname(__FILE__, 3).'/DbLocationRepository.php');
-    require_once(dirname(__FILE__, 3).'/DbShopRepository.php');
-    require_once(dirname(__FILE__, 3).'/DbImageRepository.php');
-    require_once(dirname(__FILE__, 3).'/DbCategoryRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbOrderRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbClientRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbCourierRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbLocationRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbShopRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbImageRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbCategoryRepository.php');
 
     $response = array();
 

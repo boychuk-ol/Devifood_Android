@@ -1,9 +1,9 @@
 <?php
 
-    require_once(dirname(__FILE__, 3).'/DbProductRepository.php');
-    require_once(dirname(__FILE__, 3).'/DbImageRepository.php');
-    require_once(dirname(__FILE__, 3).'/DbShopRepository.php');
-    require_once(dirname(__FILE__, 3).'/DbCategoryRepository.php');
+require_once(dirname(__FILE__, 3).'/repos/DbProductRepository.php');
+require_once(dirname(__FILE__, 3).'/repos/DbImageRepository.php');
+require_once(dirname(__FILE__, 3).'/repos/DbShopRepository.php');
+require_once(dirname(__FILE__, 3).'/repos/DbCategoryRepository.php');
 
     $response = array();
 

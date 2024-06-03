@@ -1,8 +1,8 @@
 <?php
 
-    require_once(dirname(__FILE__, 3).'/DbLocationRepository.php');
-    require_once(dirname(__FILE__, 3).'/DbShopRepository.php');
-    require_once(dirname(__FILE__, 3).'/DbClientRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbLocationRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbShopRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbClientRepository.php');
 
     $response = array();
 
