@@ -5,7 +5,7 @@ class DbCourierRepository {
     private $con;
 
     function __construct() {
-        require_once(dirname(__FILE__) . "/DbConnection.php");
+        require_once(dirname(__FILE__, 2) . "/DbConnection.php");
 
         $db = new DbConnection();
         $this->con = $db->connect();

@@ -12,9 +12,9 @@
         }
     }
 
-    require_once(dirname(__FILE__, 2).'/DbOrderProductsRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbOrderRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbProductRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbOrderProductsRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbOrderRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbProductRepository.php');
 
     $response = array();
     echo $_SERVER['REQUEST_METHOD'];

@@ -19,7 +19,7 @@
         }
     }
 
-    require_once(dirname(__FILE__, 2).'/DbCourierRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbCourierRepository.php');
 
     echo $_SERVER['REQUEST_METHOD'];
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -47,7 +47,7 @@
             $dbCourier = new DbCourierRepository();
             $courier = new Courier($_POST['full_name'], 
                                     $_POST['phone'], 
-                                    $_POST['email'], 
+                                    $_POST['email'] ?? null, 
                                     $_POST['work_region'], 
                                     $_POST['work_area']);
             $create_courier = $dbCourier->createCourier($courier);

@@ -23,9 +23,9 @@
         }
     }
 
-    require_once(dirname(__FILE__, 2).'/DbLocationRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbClientRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbShopRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbLocationRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbClientRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbShopRepository.php');
 
     echo $_SERVER['REQUEST_METHOD'];
     if($_SERVER['REQUEST_METHOD'] == 'POST'){

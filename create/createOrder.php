@@ -31,10 +31,10 @@
         }
     }
 
-    require_once(dirname(__FILE__, 2).'/DbOrderRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbClientRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbCourierRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbLocationRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbOrderRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbClientRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbCourierRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbLocationRepository.php');
 
     echo $_SERVER['REQUEST_METHOD'];
     if($_SERVER['REQUEST_METHOD'] == 'POST'){

@@ -82,10 +82,10 @@
         }
     }
 
-    require_once(dirname(__FILE__, 2).'/DbProductRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbImageRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbShopRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbCategoryRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbProductRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbImageRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbShopRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbCategoryRepository.php');
 
 
     $response = array();

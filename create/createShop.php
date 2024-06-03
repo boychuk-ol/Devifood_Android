@@ -19,9 +19,9 @@
         }
     }
 
-    require_once(dirname(__FILE__, 2).'/DbShopRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbImageRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbCategoryRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbShopRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbImageRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbCategoryRepository.php');
 
 
     echo $_SERVER['REQUEST_METHOD'];
@@ -56,8 +56,8 @@
             exit;
         } else {
             $shop = $shop = new Shop($_POST['shop_name'],
-                                        $_POST['rating'],
-                                        $_POST['reviews'],
+                                        $_POST['rating'] ?? null,
+                                        $_POST['reviews'] ?? null,
                                         $_POST['FK_image_id'],
                                         $_POST['FK_category_id']);
             $create_shop = $dbShop->createShop($shop);
