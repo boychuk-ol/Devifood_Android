@@ -37,6 +37,42 @@ class DbOrderRepository {
         }
     }
 
+    function getOrdersByClient($client_id) {
+        $stmt = $this->con->prepare("SELECT s.* 
+                                        FROM orders s 
+                                        JOIN client c 
+                                        ON s.FKclient_id = c.client_id 
+                                        WHERE s.FKclient_id=?;");
+        $stmt->bind_param("i", $client_id);
+        $stmt->execute();
+        $response = $stmt->get_result();
+        $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    function getOrdersByCourier($courier_id) {
+        $stmt = $this->con->prepare("SELECT s.* 
+                                        FROM orders s 
+                                        JOIN courier c 
+                                        ON s.FKcourier_id = c.courier_id 
+                                        WHERE s.FKcourier_id=?;");
+        $stmt->bind_param("i", $courier_id);
+        $stmt->execute();
+        $response = $stmt->get_result();
+        $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
     function getOrdersByDoneTime($done_time) {
         $stmt = $this->con->prepare("SELECT * FROM orders WHERE done = ?");
         $stmt->bind_param("i", $done_time);
