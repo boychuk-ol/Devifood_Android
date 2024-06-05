@@ -1,6 +1,6 @@
 <?php
 
-    require_once(dirname(__FILE__) . '/../DbImageRepository.php');
+    require_once(dirname(__FILE__, 2) . '/repos/DbImageRepository.php');
 
     $response = array();
 

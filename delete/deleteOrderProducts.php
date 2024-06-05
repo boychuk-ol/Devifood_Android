@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__, 2) . '/DbOrderProductsRepository.php');
+require_once(dirname(__FILE__, 2) . '/repos/DbOrderProductsRepository.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $column_name = $_POST['column_name'];

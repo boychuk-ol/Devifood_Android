@@ -1,7 +1,7 @@
 <?php
 
-    require_once(dirname(__FILE__) . '/../DbCategoryRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbImageRepository.php');
+    require_once(dirname(__FILE__, 2) . '/repos/DbCategoryRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbImageRepository.php');
 
     $response = array();
 
