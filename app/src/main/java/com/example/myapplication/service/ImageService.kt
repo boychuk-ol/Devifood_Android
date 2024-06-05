@@ -17,34 +17,6 @@ import retrofit2.Response
 class ImageService {
     private val apiService = RetrofitClient.getApiClient()?.create(RetrofitAPI::class.java)
 
-/*    fun responseHandling(call: Call<ImageResponse>?, images: ArrayList<Image>) {
-        call?.enqueue(object : Callback<ImageResponse> {
-            override fun onResponse(call: Call<ImageResponse>, response: Response<ImageResponse>) {
-                if (response.isSuccessful) {
-                    val imageResponse = response.body()
-                    if (imageResponse != null && !imageResponse.error) {
-                        val objectMapper = ObjectMapper().registerKotlinModule()
-                        val imagesResponse: ArrayList<Image> = objectMapper.readValue(
-                            Gson().toJson(imageResponse.data),
-                            object : TypeReference<ArrayList<Image>>() {}
-                        )
-                        images.clear()
-                        images.addAll(imagesResponse)
-                    } else {
-                        Log.e("API_ERROR", "Error: ${imageResponse?.message}")
-                    }
-                } else {
-                    Log.e("API_ERROR", "Response unsuccessful: ${response.errorBody()?.string()}")
-                    Log.d("API_ERROR2", "onResponse: ConfigurationListener::"+call.request().url());
-                }
-            }
-
-            override fun onFailure(call: Call<ImageResponse>, t: Throwable) {
-                Log.e("API_ERROR", "Network error: ${t.message}")
-            }
-        })
-    }    */
-
     private fun parseAndHandleImage(response: Response<ImageResponse>?): Image? {
         if (response == null) {
             Log.e("API_ERROR", "Response is null")
@@ -86,7 +58,6 @@ class ImageService {
         }
     }
 
-
     suspend fun getImages(): ArrayList<Image>? {
         return withContext(Dispatchers.IO) {
             try {
@@ -99,7 +70,6 @@ class ImageService {
             }
         }
     }
-
 
     suspend fun getImageById(imageId: Int): Image? {
         return withContext(Dispatchers.IO) {

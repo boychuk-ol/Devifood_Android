@@ -35,6 +35,7 @@ class ShopService {
                         )
                         if (shops.isNotEmpty()) {
                             adapter.setShops(shops)
+                            Log.d("TESTIK2", shop.image.fullLink.toString())
                         } else {
                             Log.e("API_ERROR", "Received empty shop list")
                         }
@@ -63,6 +64,7 @@ class ShopService {
                         val objectMapper = ObjectMapper().registerKotlinModule()
                         shop = objectMapper.readValue(Gson().toJson(shopResponse.data), Shop::class.java)
                         adapter.addShop(shop)
+                        Log.d("TESTIK", shop.image.fullLink.toString())
                     } else {
                         Log.e("API_ERROR", "Error: ${shopResponse?.message}")
                     }

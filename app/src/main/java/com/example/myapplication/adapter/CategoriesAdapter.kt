@@ -39,7 +39,7 @@ class CategoriesAdapter(private val context: Context,
         binding.shopName.setText(category)
         try {
             Picasso.get()
-                .load("http://192.168.1.136/devifood/images/${image.name + image.extension}")
+                .load("http://192.168.1.136/devifood/images/${image?.name + image?.extension}")
                 .error(R.drawable.google_icon_background)  // Установите изображение для отображения при ошибке
                 .into(binding.shopImage, object : com.squareup.picasso.Callback {
                     override fun onSuccess() {

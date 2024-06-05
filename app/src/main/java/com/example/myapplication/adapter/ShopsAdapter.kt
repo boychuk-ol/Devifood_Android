@@ -48,7 +48,7 @@ class ShopsAdapter(private val arrayList: ArrayList<Shop>): RecyclerView.Adapter
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.shopName.text = shop.shopName
-        viewHolder.category.text = shop.category
+        viewHolder.category.text = shop.category.name
         viewHolder.rating.text = shop.rating.toString()
         viewHolder.reviews.text = shop.reviews.toString()
         viewHolder.itemView.setOnClickListener(

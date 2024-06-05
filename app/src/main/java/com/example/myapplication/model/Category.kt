@@ -12,16 +12,16 @@ data class Category (
     val name: String,
     @JsonProperty("subcat_name")
     @SerializedName("subcat_name")
-    val subCategory: String,
+    val subCategory: String?,
     @JsonProperty("subsubcat_name")
     @SerializedName("subsubcat_name")
-    val subSubCategory: String,
+    val subSubCategory: String?,
     @JsonProperty("entity_name")
     @SerializedName("entity_name")
     val entityName: String,
     @JsonProperty("image")
     @SerializedName("image")
-    val image: Image
+    val image: Image?
 )
 
 data class CategoryResponse(

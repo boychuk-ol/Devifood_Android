@@ -10,6 +10,7 @@ import com.example.myapplication.activity.ContentActivity
 import com.example.myapplication.model.Image
 import com.example.myapplication.model.Shop
 import com.example.myapplication.databinding.FragmentSharePhoneBinding
+import com.example.myapplication.model.Category
 
 
 class SharePhoneFragment : Fragment() {
@@ -25,7 +26,7 @@ class SharePhoneFragment : Fragment() {
         _binding = FragmentSharePhoneBinding.inflate(inflater, container, false)
 
         binding.later.setOnClickListener {
-            val shop: Shop = Shop( 1, "kfc", "fast-food", 4.4F, 512, Image(1,"kfc","kfc1235", ".png", null))
+            val shop: Shop = Shop( 1, "kfc",  4.4F, 512, Image(1,"kfc","kfc1235", ".png", null), Category(1, "fast-food", null, null, "shop", null))
 //            addShop(shop = shop)
 //            testt()
             val intent: Intent = Intent(context, ContentActivity::class.java)
