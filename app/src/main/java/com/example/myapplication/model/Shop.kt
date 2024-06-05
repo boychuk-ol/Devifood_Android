@@ -6,13 +6,10 @@ import com.google.gson.annotations.SerializedName
 data class Shop (
     @JsonProperty("shop_id")
     @SerializedName("shop_id")
-    val shopId: Int,
+    val shopID: Int,
     @JsonProperty("shop_name")
     @SerializedName("shop_name")
     val shopName: String,
-    @JsonProperty("category")
-    @SerializedName("category")
-    val category: String,
     @JsonProperty("rating")
     @SerializedName("rating")
     val rating: Float,
@@ -21,7 +18,10 @@ data class Shop (
     val reviews: Int,
     @JsonProperty("image")
     @SerializedName("image")
-    val image: Image
+    val image: Image,
+    @JsonProperty("category")
+    @SerializedName("category")
+    val category: Category
 )
 
 data class ShopsResponse(

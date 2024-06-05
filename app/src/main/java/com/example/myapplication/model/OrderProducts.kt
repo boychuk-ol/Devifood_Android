@@ -3,22 +3,16 @@ package com.example.myapplication.model
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.gson.annotations.SerializedName
 
-data class Client (
-    @JsonProperty("client_id")
-    @SerializedName("client_id")
-    val clientID: Int,
-    @JsonProperty("phone_number")
-    @SerializedName("phone_number")
-    val phoneNumber: String,
-    @JsonProperty("email")
-    @SerializedName("email")
-    val email: String,
-    @JsonProperty("full_name")
-    @SerializedName("full_name")
-    val fullName: String
+data class OrderProducts (
+    @JsonProperty("order_id")
+    @SerializedName("order_id")
+    val orderID: Int,
+    @JsonProperty("product_id")
+    @SerializedName("product_id")
+    val productID:Int
 )
 
-data class ClientsResponse(
+data class OrderProductsResponse(
     @JsonProperty("error")
     @SerializedName("error")
     val error: Boolean,
@@ -27,10 +21,10 @@ data class ClientsResponse(
     val message: String,
     @JsonProperty("data")
     @SerializedName("data")
-    val data: List<Client>
+    val data: List<OrderProducts>
 )
 
-data class ClientResponse(
+data class OrderProductResponse(
     @JsonProperty("error")
     @SerializedName("error")
     val error: Boolean,
@@ -39,5 +33,5 @@ data class ClientResponse(
     val message: String,
     @JsonProperty("data")
     @SerializedName("data")
-    val data: Client
+    val data: OrderProducts
 )

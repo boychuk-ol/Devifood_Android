@@ -3,22 +3,28 @@ package com.example.myapplication.model
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.gson.annotations.SerializedName
 
-data class Client (
-    @JsonProperty("client_id")
-    @SerializedName("client_id")
-    val clientID: Int,
-    @JsonProperty("phone_number")
-    @SerializedName("phone_number")
-    val phoneNumber: String,
+data class Courier (
+    @JsonProperty("courier_id")
+    @SerializedName("courier_id")
+    val courierID: Int,
+    @JsonProperty("full_name")
+    @SerializedName("full_name")
+    val fullName: String,
+    @JsonProperty("phone")
+    @SerializedName("phone")
+    val phone: String,
     @JsonProperty("email")
     @SerializedName("email")
     val email: String,
-    @JsonProperty("full_name")
-    @SerializedName("full_name")
-    val fullName: String
+    @JsonProperty("work_region")
+    @SerializedName("work_region")
+    val workRegion: String,
+    @JsonProperty("work_area")
+    @SerializedName("work_area")
+    val workArea: String
 )
 
-data class ClientsResponse(
+data class CouriersResponse(
     @JsonProperty("error")
     @SerializedName("error")
     val error: Boolean,
@@ -27,10 +33,10 @@ data class ClientsResponse(
     val message: String,
     @JsonProperty("data")
     @SerializedName("data")
-    val data: List<Client>
+    val data: List<Courier>
 )
 
-data class ClientResponse(
+data class CourierResponse(
     @JsonProperty("error")
     @SerializedName("error")
     val error: Boolean,
@@ -39,5 +45,5 @@ data class ClientResponse(
     val message: String,
     @JsonProperty("data")
     @SerializedName("data")
-    val data: Client
+    val data: Courier
 )
