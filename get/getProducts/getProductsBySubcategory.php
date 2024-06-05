@@ -58,7 +58,7 @@
             }
         } else {
             $response['error'] = true;
-            $response['message'] = 'Missing parameter: country';
+            $response['message'] = 'Missing parameter: subcategory';
         }
     } else {
         $response['error'] = true;

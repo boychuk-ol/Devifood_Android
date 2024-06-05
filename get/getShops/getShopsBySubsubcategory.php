@@ -7,13 +7,13 @@
     $response = array();
 
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
-        if (isset($_GET['subcategory'])) {
+        if (isset($_GET['subsubcategory'])) {
             $dbCategory = new DbCategoryRepository();
             $dbShop = new DbShopRepository();
             $dbImage = new DbImageRepository();
-            $subcategory = $_GET['subcategory'];
+            $subsubcategory = $_GET['subsubcategory'];
 
-            $shops = $dbShop->getShopsBySubcategory($subcategory);
+            $shops = $dbShop->getShopsBySubsubcategory($subsubcategory);
             if ($shops) {
                 $response['error'] = false;
                 $response['message'] = 'Shops received successfully';
@@ -38,7 +38,7 @@
             }
         } else {
             $response['error'] = true;
-            $response['message'] = 'Missing parameter: subcategory';
+            $response['message'] = 'Missing parameter: subsubcategory';
         }
     } else {
         $response['error'] = true;
