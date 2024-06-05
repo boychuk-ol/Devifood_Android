@@ -37,12 +37,80 @@
             }
         }
         
-        function getClientByPhone($phone) {
+        function getClientsByPhone($phone) {
             $stmt = $this->con->prepare("SELECT * FROM client WHERE phone_number = ?");
             $stmt->bind_param("s", $phone);
             $stmt->execute();
             $response = $stmt->get_result();
-            $result = $response->fetch_assoc();
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+
+        function getClientsByNeighborhood($neighborhood) {
+            $stmt = $this->con->prepare("SELECT s.*
+                                        FROM client s
+                                        JOIN locations c ON s.client_id = c.client_id
+                                        WHERE c.neighborhood = ?;");
+            $stmt->bind_param("s", $neighborhood);
+            $stmt->execute();
+            $response = $stmt->get_result();
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+
+        function getClientsByAddress($address) {
+            $stmt = $this->con->prepare("SELECT s.*
+                                        FROM client s
+                                        JOIN locations c ON s.client_id = c.client_id
+                                        WHERE c.full_address = ?;");
+            $stmt->bind_param("s", $address);
+            $stmt->execute();
+            $response = $stmt->get_result();
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+
+        function getClientsByCity($city) {
+            $stmt = $this->con->prepare("SELECT s.*
+                                        FROM client s
+                                        JOIN locations c ON s.client_id = c.client_id
+                                        WHERE c.city = ?;");
+            $stmt->bind_param("s", $city);
+            $stmt->execute();
+            $response = $stmt->get_result();
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+
+        function getClientsByStreet($street) {
+            $stmt = $this->con->prepare("SELECT s.*
+                                        FROM client s
+                                        JOIN locations c ON s.client_id = c.client_id
+                                        WHERE c.street = ?;");
+            $stmt->bind_param("s", $street);
+            $stmt->execute();
+            $response = $stmt->get_result();
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
 
             if ($result) {
                 return $result;

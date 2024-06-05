@@ -50,6 +50,74 @@
             }
         }
 
+        function getShopsByAddress($address) {
+            $stmt = $this->con->prepare("SELECT s.*
+                                        FROM shop s
+                                        JOIN locations c ON s.shop_id = c.shop_id
+                                        WHERE c.full_address = ?;");
+            $stmt->bind_param("s", $address);
+            $stmt->execute();
+            $response = $stmt->get_result();
+            
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+
+        function getShopsByCity($city) {
+            $stmt = $this->con->prepare("SELECT s.*
+                                        FROM shop s
+                                        JOIN locations c ON s.shop_id = c.shop_id
+                                        WHERE c.city = ?;");
+            $stmt->bind_param("s", $city);
+            $stmt->execute();
+            $response = $stmt->get_result();
+            
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+
+        function getShopsByNeighborhood($neighborhood) {
+            $stmt = $this->con->prepare("SELECT s.*
+                                        FROM shop s
+                                        JOIN locations c ON s.shop_id = c.shop_id
+                                        WHERE c.neighborhood = ?;");
+            $stmt->bind_param("s", $neighborhood);
+            $stmt->execute();
+            $response = $stmt->get_result();
+            
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+
+        function getShopsByStreet($street) {
+            $stmt = $this->con->prepare("SELECT s.*
+                                        FROM shop s
+                                        JOIN locations c ON s.shop_id = c.shop_id
+                                        WHERE c.street = ?;");
+            $stmt->bind_param("s", $street);
+            $stmt->execute();
+            $response = $stmt->get_result();
+            
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+
         function getShopsByCategory($category) {
             $stmt = $this->con->prepare("SELECT s.*
                                         FROM shop s
