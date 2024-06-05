@@ -66,12 +66,12 @@
             $response['message'] = "Can't be initialized shop_id and client_id at the same time";
             echo json_encode($response);
             exit;
-        } elseif(!$dbClient->getClientById($_POST['client_id'])) {
+        } elseif(isset($_POST['client_id']) && !$dbClient->getClientById($_POST['client_id'])) {
             $response['error'] = true;
             $response['message'] = "Reference to non-existing client";
             echo json_encode($response);
             exit;
-        } elseif(!$dbShop->getShopById($_POST['shop_id'])) {
+        } elseif(isset($_POST['shop_id']) && !$dbShop->getShopById($_POST['shop_id'])) {
             $response['error'] = true;
             $response['message'] = "Reference to non-existing shop";
             echo json_encode($response);

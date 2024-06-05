@@ -107,6 +107,12 @@
             }
         }
 
+        function createLocation($location) {
+            $stmt = $this->con->prepare("INSERT INTO locations (`full_address`, `city`, `neighborhood`, `street`, `street_number`, `shop_id`, `client_id`) VALUES (?, ?, ?, ?, ?, ?, ?);");
+            $stmt->bind_param("sssssii", $location->full_address, $location->city, $location->neighborhood, $location->street, $location->street_number, $location->shop_id, $location->client_id);
+            $stmt->execute();
+        }
+
         function deleteLocation($column_name, $value, $condition_type = '=', $value2 = null) {
             $valid_columns = ['location_id', 'full_address', 'city', 'street', 'street_number', 'shop_id', 'client_id'];
             if (!in_array($column_name, $valid_columns)) {
@@ -230,7 +236,7 @@
         }
     
         private function getColumnType($column_name) {
-            $query = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'categories' AND COLUMN_NAME = ?";
+            $query = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'locations' AND COLUMN_NAME = ?";
             $stmt = $this->con->prepare($query);
         
             if ($stmt === false) {
@@ -257,6 +263,39 @@
                 default:
                     return 's';
             }
+        }
+
+        function getLocationByCondition($condition_column, $condition_value, $condition_type, $condition_value2 = null) {
+            $query = "SELECT * FROM locations WHERE {$condition_column} ";
+            
+            switch ($condition_type) {
+                case '=':
+                    $query .= "= ?";
+                    break;
+                case 'BETWEEN':
+                    $query .= "BETWEEN ? AND ?";
+                    break;
+                case '>':
+                    $query .= "> ?";
+                    break;
+                case '<':
+                    $query .= "< ?";
+                    break;
+                default:
+                    throw new Exception("Unsupported condition type: " . $condition_type);
+            }
+    
+            $stmt = $this->con->prepare($query);
+    
+            if ($condition_type == 'between') {
+                $stmt->bind_param("ss", $condition_value, $condition_value2);
+            } else {
+                $stmt->bind_param("s", $condition_value);
+            }
+    
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_assoc();
         }
     }
 

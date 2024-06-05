@@ -94,7 +94,7 @@
         }
 
         function createImage($image) {
-            $stmt = $this->con->prepare("INSERT INTO categories (`entity_name`, `i_name`, `extension`, `full_link`) VALUES (?, ?, ?, ?)");
+            $stmt = $this->con->prepare("INSERT INTO images (`entity_name`, `i_name`, `extension`, `full_link`) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("ssss", $image->entity_name, $image->i_name, $image->extension, $image->full_link);
             $stmt->execute();
         }
@@ -222,7 +222,7 @@
         }
     
         private function getColumnType($column_name) {
-            $query = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'categories' AND COLUMN_NAME = ?";
+            $query = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'images' AND COLUMN_NAME = ?";
             $stmt = $this->con->prepare($query);
         
             if ($stmt === false) {

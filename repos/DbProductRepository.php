@@ -445,6 +445,14 @@ class DbProductRepository {
             throw new Exception("Invalid column name");
         }
 
+        if($this->getColumnType($column_name) == 'd' && $condition_type == '=') {
+            $condition_value = $value;
+            $tolerance = 0.0001;
+            $value = $condition_value - $tolerance;
+            $value2 = $condition_value + $tolerance;
+            $condition_type = 'BETWEEN';
+        }
+
         $query = "DELETE FROM products WHERE $column_name ";
 
         switch ($condition_type) {
@@ -495,76 +503,84 @@ class DbProductRepository {
         if (!in_array($update_column, $valid_columns) || !in_array($condition_column, $valid_columns)) {
             throw new Exception("Invalid column name");
         }
+
+        if($this->getColumnType($update_column) == 'd' && $condition_type == '=') {
+            $tolerance = 0.0001;
+            $condition_value = $new_value - $tolerance;
+            $condition_value2 = $new_value + $tolerance;
+            $condition_type = 'BETWEEN';
+        }
+
         $sql = "UPDATE products SET $update_column = ";
-        
-        if (strtoupper($new_value) === 'NULL') {
-            $sql .= "NULL WHERE $condition_column ";
-        } else {
-            $sql .= "? WHERE $condition_column ";
-        }
-        
-        switch ($condition_type) {
-            case '=':
-                $sql .= "= ?";
-                break;
-            case 'BETWEEN':
-                $sql .= "BETWEEN ? AND ?";
-                break;
-            case '>':
-                $sql .= "> ?";
-                break;
-            case '<':
-                $sql .= "< ?";
-                break;
-            default:
-                throw new Exception("Unsupported condition type");
-        }
-    
-        $stmt = $this->con->prepare($sql);
-        if ($stmt === false) {
-            die('prepare() failed: ' . htmlspecialchars($this->con->error));
-        }
-
-        // Determine parameter types
-        if (strtoupper($new_value) !== 'NULL') {
-            $update_type = $this->getColumnType($update_column);
-        } else {
-            $update_type = '';
-        }
-        $condition_type1 = $this->getColumnType($condition_column);
-        $condition_type2 = $condition_type == 'BETWEEN' ? $condition_type1 : '';
-        $types = $update_type . $condition_type1 . $condition_type2;
-        
-        // Bind parameters dynamically
-        if (strtoupper($new_value) === 'NULL') {
-            if ($condition_type == 'BETWEEN') {
-                $stmt->bind_param($condition_type1 . $condition_type1, $condition_value, $condition_value2);
+            
+            if (strtoupper($new_value) === 'NULL') {
+                $sql .= "NULL WHERE $condition_column ";
             } else {
-                $stmt->bind_param($condition_type1, $condition_value);
+                $sql .= "? WHERE $condition_column ";
             }
-        } else {
-            if ($condition_type == 'BETWEEN') {
-                $stmt->bind_param($types, $new_value, $condition_value, $condition_value2);
+            
+            switch ($condition_type) {
+                case '=':
+                    $sql .= "= ?";
+                    break;
+                case 'BETWEEN':
+                    $sql .= "BETWEEN ? AND ?";
+                    break;
+                case '>':
+                    $sql .= "> ?";
+                    break;
+                case '<':
+                    $sql .= "< ?";
+                    break;
+                default:
+                    throw new Exception("Unsupported condition type");
+            }
+        
+            $stmt = $this->con->prepare($sql);
+            if ($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->con->error));
+            }
+    
+            // Determine parameter types
+            if (strtoupper($new_value) !== 'NULL') {
+                $update_type = $this->getColumnType($update_column);
             } else {
-                $stmt->bind_param($types, $new_value, $condition_value);
+                $update_type = '';
             }
-        }
-
-        // Execute the statement
-        $result = $stmt->execute();
+            $condition_type1 = $this->getColumnType($condition_column);
+            $condition_type2 = $condition_type == 'BETWEEN' ? $condition_type1 : '';
+            $types = $update_type . $condition_type1 . $condition_type2;
+            
+            // Bind parameters dynamically
+            if (strtoupper($new_value) === 'NULL') {
+                if ($condition_type == 'BETWEEN') {
+                    $stmt->bind_param($condition_type1 . $condition_type1, $condition_value, $condition_value2);
+                } else {
+                    $stmt->bind_param($condition_type1, $condition_value);
+                }
+            } else {
+                if ($condition_type == 'BETWEEN') {
+                    $stmt->bind_param($types, $new_value, $condition_value, $condition_value2);
+                } else {
+                    $stmt->bind_param($types, $new_value, $condition_value);
+                }
+            }
     
-        // Check for errors
-        if ($result === false) {
-            die('execute() failed: ' . htmlspecialchars($stmt->error));
-        }
-    
-        $stmt->close();
-    
-        return $result;
+            // Execute the statement
+            $result = $stmt->execute();
+        
+            // Check for errors
+            if ($result === false) {
+                die('execute() failed: ' . htmlspecialchars($stmt->error));
+            }
+        
+            $stmt->close();
+        
+            return $result;
     }
 
     private function getColumnType($column_name) {
-        $query = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'categories' AND COLUMN_NAME = ?";
+        $query = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'product' AND COLUMN_NAME = ?";
         $stmt = $this->con->prepare($query);
     
         if ($stmt === false) {

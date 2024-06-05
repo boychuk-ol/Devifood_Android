@@ -22,12 +22,12 @@
             try {
                 if (strtoupper($new_value) === 'NULL') {
                     $new_value = null;
-                } elseif(!$dbOrder->getOrderById($_POST['order_id'])) {
+                } elseif($update_column == 'order_id' && !$dbOrder->getOrderById($new_value)) {
                     $response['error'] = true;
                     $response['message'] = "Reference to non-existing order";
                     echo json_encode($response);
                     exit;
-                } elseif(!$dbProduct->getProductById($_POST['product_id'])) {
+                } elseif($update_column == 'product_id' && !$dbProduct->getProductById($new_value)) {
                     $response['error'] = true;
                     $response['message'] = "Reference to non-existing product";
                     echo json_encode($response);

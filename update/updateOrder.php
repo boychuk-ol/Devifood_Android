@@ -24,27 +24,45 @@
             try {
                 if (strtoupper($new_value) === 'NULL') {
                     $new_value = null;
-                } elseif ($update_column == 'FKcourier_id' && !$dbCourier->getCourierById($new_value)){
+                } elseif ($update_column == 'FKcourier_id' && !$dbCourier->getCourierById($new_value)) {
                     $response['error'] = true;
                     $response['message'] = 'Reference to non-existing courier';
                     echo json_encode($response);
                     exit;
-                } elseif ($update_column == 'FKclient_id' && !$dbClient->getClientById($new_value)){
+                } elseif ($update_column == 'FKclient_id' && !$dbClient->getClientById($new_value)) {
                     $response['error'] = true;
                     $response['message'] = 'Reference to non-existing client';
                     echo json_encode($response);
                     exit;
-                } elseif ($update_column == 'shop_location_id' && !$dbLocation->getLocationById($new_value)){
+                } elseif ($update_column == 'shop_location_id' && !$dbLocation->getLocationById($new_value)) {
                     $response['error'] = true;
                     $response['message'] = 'Reference to non-existing shop location';
                     echo json_encode($response);
                     exit;
-                } elseif ($update_column == 'client_location_id' && !$dbLocation->getLocationById($new_value)){
+                } elseif ($update_column == 'client_location_id' && !$dbLocation->getLocationById($new_value)) {
                     $response['error'] = true;
                     $response['message'] = 'Reference to non-existing client location';
                     echo json_encode($response);
                     exit;
                 }
+                
+                $order = $dbOrder->getOrderByCondition($condition_column, $condition_value, $condition_type, $condition_value2);
+                if (!$order) {
+                    $response['error'] = true;
+                    $response['message'] = 'Order not found';
+                    echo json_encode($response);
+                    exit;
+                }
+                $shop_location_id = $order['shop_location_id'];
+                $client_location_id = $order['client_location_id'];
+
+                if (($update_column == 'client_location_id' && $new_value == $shop_location_id) || ($update_column == 'shop_location_id' && $new_value == $client_location_id)) {
+                    $response['error'] = true;
+                    $response['message'] = "client_location_id and shop_location_id can't refer to the same location";
+                    echo json_encode($response);
+                    exit;
+                }
+
                 $result = $dbOrder->updateOrder($update_column, $new_value, $condition_column, $condition_value, $condition_type, $condition_value2);
 
                 if ($result) {

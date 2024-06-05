@@ -13,10 +13,10 @@
         }
 
 
-        function createShop($shop_name, $category, $rating, $reviews) {
-            $stmt = $this->con->prepare("INSERT INTO shop (shop_name, category, rating, reviews) VALUES (?, ?, ?, ?);");
+        function createShop($shop) {
+            $stmt = $this->con->prepare("INSERT INTO shop (shop_name, rating, reviews, FK_image_id, FK_category_id) VALUES (?, ?, ?, ?, ?);");
             
-            $stmt->bind_param("ssdi", $shop_name, $category, $rating, $reviews);
+            $stmt->bind_param("sdiii", $shop->shop_name, $shop->rating, $shop->reviews, $shop->FK_image_id, $shop->FK_category_id);
 
             if($stmt->execute()){
                 return true;
@@ -340,12 +340,21 @@
             }
         }
 
-        function deleteProduct($column_name, $value, $condition_type = '=', $value2 = null) {
+        function deleteShop($column_name, $value, $condition_type = '=', $value2 = null) {
             $valid_columns = ['shop_id', 'shop_name', 'rating', 'reviews', 'FK_image_ID', 'FK_category_id'];
             if (!in_array($column_name, $valid_columns)) {
                 throw new Exception("Invalid column name");
             }
-    
+
+            echo $this->getColumnType($column_name);
+            if($this->getColumnType($column_name) == 'd' && $condition_type == '=') {
+                $condition_value = $value;
+                $tolerance = 0.0001;
+                $value = $condition_value - $tolerance;
+                $value2 = $condition_value + $tolerance;
+                $condition_type = 'BETWEEN';
+            }
+
             $query = "DELETE FROM shop WHERE $column_name ";
     
             switch ($condition_type) {
@@ -394,6 +403,14 @@
             if (!in_array($update_column, $valid_columns) || !in_array($condition_column, $valid_columns)) {
                 throw new Exception("Invalid column name");
             }
+
+            if($this->getColumnType($update_column) == 'd' && $condition_type == '=') {
+                $tolerance = 0.0001;
+                $condition_value = $new_value - $tolerance;
+                $condition_value2 = $new_value + $tolerance;
+                $condition_type = 'BETWEEN';
+            }
+
             $sql = "UPDATE shop SET $update_column = ";
             
             if (strtoupper($new_value) === 'NULL') {
@@ -463,7 +480,7 @@
         }
     
         private function getColumnType($column_name) {
-            $query = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'categories' AND COLUMN_NAME = ?";
+            $query = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'shop' AND COLUMN_NAME = ?";
             $stmt = $this->con->prepare($query);
         
             if ($stmt === false) {

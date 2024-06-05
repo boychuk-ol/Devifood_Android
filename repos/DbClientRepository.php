@@ -209,61 +209,71 @@
             if (!in_array($update_column, $valid_columns) || !in_array($condition_column, $valid_columns)) {
                 throw new Exception("Invalid column name");
             }
-            $sql = "UPDATE client SET $update_column = ? WHERE $condition_column ";
-    
+            $sql = "UPDATE client SET $update_column = ";
+            
+            if (strtoupper($new_value) === 'NULL') {
+                $sql .= "NULL WHERE $condition_column ";
+            } else {
+                $sql .= "? WHERE $condition_column ";
+            }
+            
             switch ($condition_type) {
                 case '=':
                     $sql .= "= ?";
-                    $types = $this->getColumnType($update_column) . $this->getColumnType($condition_column);
-                    $params = [$new_value, $condition_value];
                     break;
                 case 'BETWEEN':
                     $sql .= "BETWEEN ? AND ?";
-                    $types = $this->getColumnType($update_column) . $this->getColumnType($condition_column) . $this->getColumnType($condition_column);
-                    $params = [$new_value, $condition_value, $condition_value2];
                     break;
                 case '>':
                     $sql .= "> ?";
-                    $types = $this->getColumnType($update_column) . $this->getColumnType($condition_column);
-                    $params = [$new_value, $condition_value];
                     break;
                 case '<':
                     $sql .= "< ?";
-                    $types = $this->getColumnType($update_column) . $this->getColumnType($condition_column);
-                    $params = [$new_value, $condition_value];
                     break;
                 default:
                     throw new Exception("Unsupported condition type");
             }
-    
-            // Initialize the prepared statement
+        
             $stmt = $this->con->prepare($sql);
-    
             if ($stmt === false) {
                 die('prepare() failed: ' . htmlspecialchars($this->con->error));
             }
-
-            // Handle NULL values
-            if (strtoupper($new_value) === 'NULL') {
-                $stmt->bind_param($types, ...$params);
-                $sql = str_replace('?', 'NULL', "UPDATE client SET $update_column = ? WHERE $condition_column ");
-            } else {
+    
+            // Determine parameter types
+            if (strtoupper($new_value) !== 'NULL') {
                 $update_type = $this->getColumnType($update_column);
-                $types = $update_type . $types;
-                $stmt->bind_param($types, $new_value, ...$params);
+            } else {
+                $update_type = '';
+            }
+            $condition_type1 = $this->getColumnType($condition_column);
+            $condition_type2 = $condition_type == 'BETWEEN' ? $condition_type1 : '';
+            $types = $update_type . $condition_type1 . $condition_type2;
+            
+            // Bind parameters dynamically
+            if (strtoupper($new_value) === 'NULL') {
+                if ($condition_type == 'BETWEEN') {
+                    $stmt->bind_param($condition_type1 . $condition_type1, $condition_value, $condition_value2);
+                } else {
+                    $stmt->bind_param($condition_type1, $condition_value);
+                }
+            } else {
+                if ($condition_type == 'BETWEEN') {
+                    $stmt->bind_param($types, $new_value, $condition_value, $condition_value2);
+                } else {
+                    $stmt->bind_param($types, $new_value, $condition_value);
+                }
             }
     
             // Execute the statement
             $result = $stmt->execute();
-    
+        
             // Check for errors
             if ($result === false) {
                 die('execute() failed: ' . htmlspecialchars($stmt->error));
             }
-    
-            // Close the statement
+        
             $stmt->close();
-    
+        
             return $result;
         }
     

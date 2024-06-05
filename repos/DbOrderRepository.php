@@ -325,11 +325,30 @@ class DbOrderRepository {
         }
     }
 
+    function createOrder($order) {
+        $stmt = $this->con->prepare("INSERT INTO orders (`created`, `o_status`, `delivery_price`, `delivery_time`, 
+                                    `total_price`, `payment_method`, `FKclient_id`, `FKcourier_id`, 
+                                    `shop_location_id`, `client_location_id`) 
+                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+        $stmt->bind_param("isdidsiiii", $order->created, $order->o_status, $order->delivery_price, $order->delivery_time, $order->total_price, 
+                                        $order->payment_method, $order->FKclient_id, $order->FKcourier_id, $order->shop_location_id, $order->client_location_id);
+        $stmt->execute();
+    }
+
+
     function deleteOrder($column_name, $value, $condition_type = '=', $value2 = null) {
         $valid_columns = ['order_id', 'created', 'done', 'o_status', 'delivery_price', 'delivery_time', 'total_price', 'payment_method',
                             'FKcourier_id', 'FKclient_id', 'shop_location_id', 'client_location_id'];
         if (!in_array($column_name, $valid_columns)) {
             throw new Exception("Invalid column name");
+        }
+
+        if($this->getColumnType($column_name) == 'd' && $condition_type == '=') {
+            $condition_value = $value;
+            $tolerance = 0.0001;
+            $value = $condition_value - $tolerance;
+            $value2 = $condition_value + $tolerance;
+            $condition_type = 'BETWEEN';
         }
 
         $query = "DELETE FROM orders WHERE $column_name ";
@@ -381,76 +400,84 @@ class DbOrderRepository {
         if (!in_array($update_column, $valid_columns) || !in_array($condition_column, $valid_columns)) {
             throw new Exception("Invalid column name");
         }
+
+        if($this->getColumnType($update_column) == 'd' && $condition_type == '=') {
+            $tolerance = 0.0001;
+            $condition_value = $new_value - $tolerance;
+            $condition_value2 = $new_value + $tolerance;
+            $condition_type = 'BETWEEN';
+        }
+
         $sql = "UPDATE orders SET $update_column = ";
-        
-        if (strtoupper($new_value) === 'NULL') {
-            $sql .= "NULL WHERE $condition_column ";
-        } else {
-            $sql .= "? WHERE $condition_column ";
-        }
-        
-        switch ($condition_type) {
-            case '=':
-                $sql .= "= ?";
-                break;
-            case 'BETWEEN':
-                $sql .= "BETWEEN ? AND ?";
-                break;
-            case '>':
-                $sql .= "> ?";
-                break;
-            case '<':
-                $sql .= "< ?";
-                break;
-            default:
-                throw new Exception("Unsupported condition type");
-        }
-    
-        $stmt = $this->con->prepare($sql);
-        if ($stmt === false) {
-            die('prepare() failed: ' . htmlspecialchars($this->con->error));
-        }
-
-        // Determine parameter types
-        if (strtoupper($new_value) !== 'NULL') {
-            $update_type = $this->getColumnType($update_column);
-        } else {
-            $update_type = '';
-        }
-        $condition_type1 = $this->getColumnType($condition_column);
-        $condition_type2 = $condition_type == 'BETWEEN' ? $condition_type1 : '';
-        $types = $update_type . $condition_type1 . $condition_type2;
-        
-        // Bind parameters dynamically
-        if (strtoupper($new_value) === 'NULL') {
-            if ($condition_type == 'BETWEEN') {
-                $stmt->bind_param($condition_type1 . $condition_type1, $condition_value, $condition_value2);
+            
+            if (strtoupper($new_value) === 'NULL') {
+                $sql .= "NULL WHERE $condition_column ";
             } else {
-                $stmt->bind_param($condition_type1, $condition_value);
+                $sql .= "? WHERE $condition_column ";
             }
-        } else {
-            if ($condition_type == 'BETWEEN') {
-                $stmt->bind_param($types, $new_value, $condition_value, $condition_value2);
+            
+            switch ($condition_type) {
+                case '=':
+                    $sql .= "= ?";
+                    break;
+                case 'BETWEEN':
+                    $sql .= "BETWEEN ? AND ?";
+                    break;
+                case '>':
+                    $sql .= "> ?";
+                    break;
+                case '<':
+                    $sql .= "< ?";
+                    break;
+                default:
+                    throw new Exception("Unsupported condition type");
+            }
+        
+            $stmt = $this->con->prepare($sql);
+            if ($stmt === false) {
+                die('prepare() failed: ' . htmlspecialchars($this->con->error));
+            }
+    
+            // Determine parameter types
+            if (strtoupper($new_value) !== 'NULL') {
+                $update_type = $this->getColumnType($update_column);
             } else {
-                $stmt->bind_param($types, $new_value, $condition_value);
+                $update_type = '';
             }
-        }
-
-        // Execute the statement
-        $result = $stmt->execute();
+            $condition_type1 = $this->getColumnType($condition_column);
+            $condition_type2 = $condition_type == 'BETWEEN' ? $condition_type1 : '';
+            $types = $update_type . $condition_type1 . $condition_type2;
+            
+            // Bind parameters dynamically
+            if (strtoupper($new_value) === 'NULL') {
+                if ($condition_type == 'BETWEEN') {
+                    $stmt->bind_param($condition_type1 . $condition_type1, $condition_value, $condition_value2);
+                } else {
+                    $stmt->bind_param($condition_type1, $condition_value);
+                }
+            } else {
+                if ($condition_type == 'BETWEEN') {
+                    $stmt->bind_param($types, $new_value, $condition_value, $condition_value2);
+                } else {
+                    $stmt->bind_param($types, $new_value, $condition_value);
+                }
+            }
     
-        // Check for errors
-        if ($result === false) {
-            die('execute() failed: ' . htmlspecialchars($stmt->error));
-        }
-    
-        $stmt->close();
-    
-        return $result;
+            // Execute the statement
+            $result = $stmt->execute();
+        
+            // Check for errors
+            if ($result === false) {
+                die('execute() failed: ' . htmlspecialchars($stmt->error));
+            }
+        
+            $stmt->close();
+        
+            return $result;
     }
 
     private function getColumnType($column_name) {
-        $query = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'categories' AND COLUMN_NAME = ?";
+        $query = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'orders' AND COLUMN_NAME = ?";
         $stmt = $this->con->prepare($query);
     
         if ($stmt === false) {
@@ -477,6 +504,39 @@ class DbOrderRepository {
             default:
                 return 's';
         }
+    }
+
+    function getOrderByCondition($condition_column, $condition_value, $condition_type, $condition_value2 = null) {
+        $query = "SELECT * FROM orders WHERE {$condition_column} ";
+        
+        switch ($condition_type) {
+            case '=':
+                $query .= "= ?";
+                break;
+            case 'BETWEEN':
+                $query .= "BETWEEN ? AND ?";
+                break;
+            case '>':
+                $query .= "> ?";
+                break;
+            case '<':
+                $query .= "< ?";
+                break;
+            default:
+                throw new Exception("Unsupported condition type: " . $condition_type);
+        }
+
+        $stmt = $this->con->prepare($query);
+
+        if ($condition_type == 'between') {
+            $stmt->bind_param("ss", $condition_value, $condition_value2);
+        } else {
+            $stmt->bind_param("s", $condition_value);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
     }
 
 }

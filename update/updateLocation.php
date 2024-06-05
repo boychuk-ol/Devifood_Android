@@ -32,6 +32,23 @@
                     $response['message'] = 'Reference to non-existing client';
                     echo json_encode($response);
                     exit;
+                } 
+                
+                $location = $dbLocation->getLocationByCondition($condition_column, $condition_value, $condition_type, $condition_value2);
+                if (!$location) {
+                    $response['error'] = true;
+                    $response['message'] = 'Location not found';
+                    echo json_encode($response);
+                    exit;
+                }
+                $shop_location_id = $location['shop_id'];
+                $client_location_id = $location['client_id'];
+
+                if (($update_column == 'shop_id' && $new_value != 'NULL' && $client_location_id != null) || ($update_column == 'client_id' && $new_value != 'NULL' && $shop_location_id != null)) {
+                    $response['error'] = true;
+                    $response['message'] = "shop_id and client_id can't be initialized at the same time";
+                    echo json_encode($response);
+                    exit;
                 }
                 $result = $dbLocation->updateLocation($update_column, $new_value, $condition_column, $condition_value, $condition_type, $condition_value2);
 

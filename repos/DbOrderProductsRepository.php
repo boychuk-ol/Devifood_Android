@@ -145,7 +145,7 @@
         }
     
         private function getColumnType($column_name) {
-            $query = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'categories' AND COLUMN_NAME = ?";
+            $query = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'order_products' AND COLUMN_NAME = ?";
             $stmt = $this->con->prepare($query);
         
             if ($stmt === false) {

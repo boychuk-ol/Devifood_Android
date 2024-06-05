@@ -46,11 +46,6 @@
             $response['message'] = 'Missing parameter created';
             echo json_encode($response);
             exit;
-        } elseif(!isset($_POST['done'])) {
-            $response['error'] = true;
-            $response['message'] = 'Missing parameter done';
-            echo json_encode($response);
-            exit;
         } elseif(!isset($_POST['o_status'])) {
             $response['error'] = true;
             $response['message'] = 'Missing parameter o_status';
@@ -124,7 +119,7 @@
         } else {
             $dbOrder = new DbOrderRepository();
             $order = new Order($_POST['created'], 
-                                    $_POST['done'], 
+                                    $_POST['done'] ?? null, 
                                     $_POST['o_status'], 
                                     $_POST['delivery_price'],
                                     $_POST['delivery_time'], 
@@ -150,6 +145,6 @@
     }
 
     header('Content-Type: application/json');
-    echo json_encode($location);
+    echo json_encode($order);
     exit;
 ?>

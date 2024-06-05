@@ -24,22 +24,22 @@
             try {
                 if (strtoupper($new_value) === 'NULL') {
                     $new_value = null;
-                } elseif(isset($_POST['FK_image_id']) && !$dbImage->getImageById($_POST['FK_image_id'])) {
+                } elseif($update_column == 'FK_image_id' && !$dbImage->getImageById($new_value)) {
                     $response['error'] = true;
                     $response['message'] = "Reference to non-existing image";
                     echo json_encode($response);
                     exit;
-                } elseif(isset($_POST['FK_shop_id']) && !$dbShop->getShopById($_POST['FK_shop_id'])) {
+                } elseif($update_column == 'FK_shop_id' && !$dbShop->getShopById($new_value)) {
                     $response['error'] = true;
                     $response['message'] = "Reference to non-existing product";
                     echo json_encode($response);
                     exit;
-                } elseif(isset($_POST['FK_category_id']) && !$dbCategory->getCategoryById($_POST['FK_category_id'])) {
+                } elseif($update_column == 'FK_category_id' && !$dbCategory->getCategoryById($_POST['FK_category_id'])) {
                     $response['error'] = true;
                     $response['message'] = "Reference to non-existing category";
                     echo json_encode($response);
                     exit;
-                }
+                } 
                 $result = $dbProduct->updateProduct($update_column, $new_value, $condition_column, $condition_value, $condition_type, $condition_value2);
 
                 if ($result) {
