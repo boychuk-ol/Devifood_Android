@@ -118,10 +118,10 @@
             }
         }
 
-        function getShopsByProduct($product_id) {
+        function getShopByProduct($product_id) {
             $stmt = $this->con->prepare("SELECT s.*
                                         FROM shop s
-                                        JOIN products c ON s.FK_shop_id = c.shop_id
+                                        JOIN products c ON s.shop_id = c.FK_shop_id
                                         WHERE c.product_id = ?;");
             $stmt->bind_param("s", $product_id);
             $stmt->execute();
