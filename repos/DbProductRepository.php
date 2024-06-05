@@ -65,6 +65,24 @@ class DbProductRepository {
         }
     }
 
+    
+    function getProductsByShop($shop_id) {
+        $stmt = $this->con->prepare("SELECT s.*
+                                    FROM products s
+                                    JOIN shop c ON s.FK_shop_id = c.shop_id
+                                    WHERE c.shop_id = ?;");
+        $stmt->bind_param("s", $shop_id);
+        $stmt->execute();
+        $response = $stmt->get_result();
+        
+        $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
     function getProductsByCategory($category) {
         $stmt = $this->con->prepare("SELECT s.*
                                     FROM products s

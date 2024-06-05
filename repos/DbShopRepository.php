@@ -118,6 +118,23 @@
             }
         }
 
+        function getShopsByProduct($product_id) {
+            $stmt = $this->con->prepare("SELECT s.*
+                                        FROM shop s
+                                        JOIN products c ON s.FK_shop_id = c.shop_id
+                                        WHERE c.product_id = ?;");
+            $stmt->bind_param("s", $product_id);
+            $stmt->execute();
+            $response = $stmt->get_result();
+            
+            $result = $response->fetch_assoc();
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+
         function getShopsByCategory($category) {
             $stmt = $this->con->prepare("SELECT s.*
                                         FROM shop s
