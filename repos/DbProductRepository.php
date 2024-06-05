@@ -65,6 +65,57 @@ class DbProductRepository {
         }
     }
 
+    function getProductsByCategory($category) {
+        $stmt = $this->con->prepare("SELECT s.*
+                                    FROM products s
+                                    JOIN categories c ON s.FK_category_id = c.category_id
+                                    WHERE c.c_name = ?;");
+        $stmt->bind_param("s", $category);
+        $stmt->execute();
+        $response = $stmt->get_result();
+        
+        $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    function getProductBySubcategory($subcategory) {
+        $stmt = $this->con->prepare("SELECT s.*
+                                    FROM products s
+                                    JOIN categories c ON s.FK_category_id = c.category_id
+                                    WHERE c.subcat_name = ?;");
+        $stmt->bind_param("s", $subcategory);
+        $stmt->execute();
+        $response = $stmt->get_result();
+        
+        $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    function getProductBySubsubcategory($subsubcategory) {
+        $stmt = $this->con->prepare("SELECT s.*
+                                    FROM products s
+                                    JOIN categories c ON s.FK_category_id = c.category_id
+                                    WHERE c.subsubcat_name = ?;");
+        $stmt->bind_param("s", $subsubcategory);
+        $stmt->execute();
+        $response = $stmt->get_result();
+        
+        $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
     function getProductsByCountry($country) {
         $stmt = $this->con->prepare("SELECT * FROM products WHERE country = ?");
         $stmt->bind_param("s", $country);

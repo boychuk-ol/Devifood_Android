@@ -67,6 +67,40 @@
             }
         }
 
+        function getShopsBySubcategory($subcategory) {
+            $stmt = $this->con->prepare("SELECT s.*
+                                        FROM shop s
+                                        JOIN categories c ON s.FK_category_id = c.category_id
+                                        WHERE c.subcat_name = ?;");
+            $stmt->bind_param("s", $subcategory);
+            $stmt->execute();
+            $response = $stmt->get_result();
+            
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+
+        function getShopsBySubsubcategory($subsubcategory) {
+            $stmt = $this->con->prepare("SELECT s.*
+                                        FROM shop s
+                                        JOIN categories c ON s.FK_category_id = c.category_id
+                                        WHERE c.subsubcat_name = ?;");
+            $stmt->bind_param("s", $subsubcategory);
+            $stmt->execute();
+            $response = $stmt->get_result();
+            
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+
         function getShopByName($name) {
             $stmt = $this->con->prepare("SELECT * FROM shop WHERE shop_name = ?");
             $stmt->bind_param("s", $name);
