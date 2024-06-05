@@ -51,7 +51,10 @@
         }
 
         function getShopsByCategory($category) {
-            $stmt = $this->con->prepare("SELECT * FROM shop WHERE category = ?");
+            $stmt = $this->con->prepare("SELECT s.*
+                                        FROM shop s
+                                        JOIN categories c ON s.FK_category_id = c.category_id
+                                        WHERE c.c_name = ?;");
             $stmt->bind_param("s", $category);
             $stmt->execute();
             $response = $stmt->get_result();
@@ -76,6 +79,34 @@
             } else {
                 return false;
             }
+        }
+
+        function getProductsByRating($rating) {
+            $tolerance = 0.0001;
+            $lower_bound = $rating - $tolerance;
+            $upper_bound = $rating + $tolerance;
+        
+            $stmt = $this->con->prepare("SELECT * FROM products WHERE rating BETWEEN ? AND ?");
+            if (!$stmt) {
+                error_log("Prepare failed: " . $this->con->error);
+                return false;
+            }
+        
+            $stmt->bind_param("dd", $lower_bound, $upper_bound);
+            if (!$stmt->execute()) {
+                error_log("Execute failed: " . $stmt->error);
+                return false;
+            }
+        
+            $response = $stmt->get_result();
+            if (!$response) {
+                error_log("Get result failed: " . $stmt->error);
+                return false;
+            }
+        
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+        
+            return $result ? $result : false;
         }
 
         function getShopsWithRatingMoreThan($rating) {
@@ -104,6 +135,34 @@
             } else {
                 return false;
             }
+        }
+
+        function getProductsByReviews($reviews) {
+            $tolerance = 0.0001;
+            $lower_bound = $reviews - $tolerance;
+            $upper_bound = $reviews + $tolerance;
+        
+            $stmt = $this->con->prepare("SELECT * FROM products WHERE reviews BETWEEN ? AND ?");
+            if (!$stmt) {
+                error_log("Prepare failed: " . $this->con->error);
+                return false;
+            }
+        
+            $stmt->bind_param("dd", $lower_bound, $upper_bound);
+            if (!$stmt->execute()) {
+                error_log("Execute failed: " . $stmt->error);
+                return false;
+            }
+        
+            $response = $stmt->get_result();
+            if (!$response) {
+                error_log("Get result failed: " . $stmt->error);
+                return false;
+            }
+        
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+        
+            return $result ? $result : false;
         }
 
         function getShopsWithRatingBetween($min_rating, $max_rating) {

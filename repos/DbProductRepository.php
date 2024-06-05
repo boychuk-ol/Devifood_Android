@@ -121,6 +121,34 @@ class DbProductRepository {
         }
     }
 
+    function getProductsByRating($rating) {
+        $tolerance = 0.0001; // You can adjust this tolerance level
+        $lower_bound = $rating - $tolerance;
+        $upper_bound = $rating + $tolerance;
+    
+        $stmt = $this->con->prepare("SELECT * FROM products WHERE rating BETWEEN ? AND ?");
+        if (!$stmt) {
+            error_log("Prepare failed: " . $this->con->error);
+            return false;
+        }
+    
+        $stmt->bind_param("dd", $lower_bound, $upper_bound);
+        if (!$stmt->execute()) {
+            error_log("Execute failed: " . $stmt->error);
+            return false;
+        }
+    
+        $response = $stmt->get_result();
+        if (!$response) {
+            error_log("Get result failed: " . $stmt->error);
+            return false;
+        }
+    
+        $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+    
+        return $result ? $result : false;
+    }
+
     function getProductsWithRatingBetween($min_rating, $max_rating) {
         $stmt = $this->con->prepare("SELECT * FROM products WHERE rating BETWEEN ? AND ?");
         $stmt->bind_param("dd", $min_rating, $max_rating);
@@ -149,6 +177,34 @@ class DbProductRepository {
         $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
 
         return $result ?: false;
+    }
+
+    function getProductsByWeight($weight) {
+        $tolerance = 0.0001;
+        $lower_bound = $weight - $tolerance;
+        $upper_bound = $weight + $tolerance;
+    
+        $stmt = $this->con->prepare("SELECT * FROM products WHERE weight BETWEEN ? AND ?");
+        if (!$stmt) {
+            error_log("Prepare failed: " . $this->con->error);
+            return false;
+        }
+    
+        $stmt->bind_param("dd", $lower_bound, $upper_bound);
+        if (!$stmt->execute()) {
+            error_log("Execute failed: " . $stmt->error);
+            return false;
+        }
+    
+        $response = $stmt->get_result();
+        if (!$response) {
+            error_log("Get result failed: " . $stmt->error);
+            return false;
+        }
+    
+        $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+    
+        return $result ? $result : false;
     }
 
     function getProductsWithWeightBetween($min_weight, $max_weight) {
@@ -181,6 +237,20 @@ class DbProductRepository {
         return $result ?: false;
     }
 
+    function getProductsByCaloriesTotal($calories_total) {
+        $stmt = $this->con->prepare("SELECT * FROM products WHERE calories_total = ?");
+        $stmt->bind_param("i", $calories_total);
+        $stmt->execute();
+        $response = $stmt->get_result();
+        $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
     function getProductsWithCaloriesTotalBetween($min_calories, $max_calories) {
         $stmt = $this->con->prepare("SELECT * FROM products WHERE calories_total BETWEEN ? AND ?");
         $stmt->bind_param("ii", $min_calories, $max_calories);
@@ -209,6 +279,34 @@ class DbProductRepository {
         $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
 
         return $result ?: false;
+    }
+
+    function getProductsByPrice($price) {
+        $tolerance = 0.0001; // You can adjust this tolerance level
+        $lower_bound = $price - $tolerance;
+        $upper_bound = $price + $tolerance;
+    
+        $stmt = $this->con->prepare("SELECT * FROM products WHERE price BETWEEN ? AND ?");
+        if (!$stmt) {
+            error_log("Prepare failed: " . $this->con->error);
+            return false;
+        }
+    
+        $stmt->bind_param("dd", $lower_bound, $upper_bound);
+        if (!$stmt->execute()) {
+            error_log("Execute failed: " . $stmt->error);
+            return false;
+        }
+    
+        $response = $stmt->get_result();
+        if (!$response) {
+            error_log("Get result failed: " . $stmt->error);
+            return false;
+        }
+    
+        $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+    
+        return $result ? $result : false;
     }
 
     function getProductsWithPriceBetween($min_price, $max_price) {

@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $dbCourier = new DbCourierRepository();
         $email = $_GET['email'];
 
-        if ($couriers = $dbCourier->getCouriersByEmail($email)) {
+        if ($couriers = $dbCourier->getCourierByEmail($email)) {
             $response['error'] = false;
             $response['message'] = 'Courier received successfully';
             $response['data'] = $couriers;

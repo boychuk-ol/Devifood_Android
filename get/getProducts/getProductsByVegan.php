@@ -16,6 +16,7 @@
             $dbCategory = new DbCategoryRepository();
             $for_vegans = $_GET['for_vegans'];
 
+            $for_vegans = ($for_vegans == true) ? 1 : 0;            
             $products = $dbProduct->getProductsByVegan($for_vegans);
             if ($products) {
                 $response['error'] = false;

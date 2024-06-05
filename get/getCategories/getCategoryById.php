@@ -1,6 +1,6 @@
 <?php
 
-    require_once(dirname(__FILE__, 3).'/repos/DbClientRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbCategoryRepository.php');
     require_once(dirname(__FILE__, 3).'/repos/DbImageRepository.php');
     
 
@@ -8,24 +8,19 @@
 
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
-        if(isset($_GET['client_id'])) {
-            $dbClient = new DbClientRepository();
+        if(isset($_GET['category_id'])) {
+            $dbCategory = new DbCategoryRepository();
             $dbImage = new DbImageRepository();
-            $client_id = $_GET['client_id'];
+            $category_id = $_GET['category_id'];
 
-            $client = $dbClient->getClientById($client_id);
-            if ($client) {
+            $category = $dbCategory->getCategoryById($category_id);
+            if ($category) {
                 $response['error'] = false;
-                $response['message'] = 'Client received successfully';
-                $response['data'] = $dbClient->getClientById($client_id);
-                $image = $dbImage->getImageById($client['FK_image_id']);
-                if ($image) {
-                    $client['image'] = $image;
-                    unset($client['FK_image_id']);
-                } else {
-                    $client['image'] = null;
-                }
-                $response['data'] = $client;
+                $response['message'] = 'Category received successfully';
+                $image = $dbImage->getImageById($category['FK_image_id']);
+                $category['image'] = $image ? $image : null;
+                unset($category['FK_image_id']);
+                $response['data'] = $category;
             } else {
                 $response['error'] = true;
                 $response['message'] = 'Some error occcurred please try again';
@@ -33,7 +28,7 @@
         }
         else {
             $response['error'] = true;
-            $response['message'] = 'Missing parameter: client_id';
+            $response['message'] = 'Missing parameter: category_id';
         }
     } else {
         $response['error'] = true;

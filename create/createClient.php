@@ -15,7 +15,7 @@
         }
     }
 
-    require_once(dirname(__FILE__, 2).'/DbClientRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbClientRepository.php');
 
     echo $_SERVER['REQUEST_METHOD'];
     if($_SERVER['REQUEST_METHOD'] == 'POST'){

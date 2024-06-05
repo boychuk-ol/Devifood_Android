@@ -19,8 +19,8 @@
         }
     }
 
-    require_once(dirname(__FILE__, 2).'/DbCategoryRepository.php');
-    require_once(dirname(__FILE__, 2).'/DbImageRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbCategoryRepository.php');
+    require_once(dirname(__FILE__, 2).'/repos/DbImageRepository.php');
 
     echo $_SERVER['REQUEST_METHOD'];
     if($_SERVER['REQUEST_METHOD'] == 'POST'){

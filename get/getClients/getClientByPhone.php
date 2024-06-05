@@ -5,7 +5,7 @@
     $response = array();
 
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
-        if(isset($_GET['phone'])) {
+        if(isset($_GET['phone_number'])) {
             $dbClient = new DbClientRepository();
             $phone = $_GET['phone_number'];
 

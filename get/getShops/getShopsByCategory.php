@@ -1,13 +1,14 @@
 <?php
 
-require_once(dirname(__FILE__, 3).'/repos/DbShopRepository.php');
-require_once(dirname(__FILE__, 3).'/repos/DbImageRepository.php');
-require_once(dirname(__FILE__, 3).'/repos/DbCategoryRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbShopRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbImageRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbCategoryRepository.php');
 
     $response = array();
 
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
         if (isset($_GET['category'])) {
+            $dbCategory = new DbCategoryRepository();
             $dbShop = new DbShopRepository();
             $dbImage = new DbImageRepository();
             $category = $_GET['category'];

@@ -1,13 +1,13 @@
 <?php
 
-    require_once(dirname(__FILE__, 3).'/repos/DbImageRepository.php');
+    require_once(dirname(__FILE__, 3).'/repos/DbCourierRepository.php');
 
     $response = array();
 
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
         if(isset($_GET['courier_id'])) {
-            $dbCourier = new DbImageRepository();
+            $dbCourier = new DbCourierRepository();
             $courier_id = $_GET['courier_id'];
 
             if ($dbCourier->getCourierById($courier_id)) {
@@ -21,7 +21,7 @@
         }
         else {
             $response['error'] = true;
-            $response['message'] = 'Missing parameter: image_id';
+            $response['message'] = 'Missing parameter: courier_id';
         }
     } else {
         $response['error'] = true;

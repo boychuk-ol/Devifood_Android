@@ -15,7 +15,7 @@
             $dbCategory = new DbCategoryRepository();
             $price = $_GET['price'];
 
-            $products = $dbProduct->getProductsWithPriceMoreThan($price);
+            $products = $dbProduct->getProductsByPrice($price);
             if ($products) {
                 $response['error'] = false;
                 $response['message'] = 'Product received successfully';
@@ -67,4 +67,5 @@
     header('Content-Type: application/json');
     echo json_encode($response);
     exit;
+    
 ?>

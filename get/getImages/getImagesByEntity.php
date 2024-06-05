@@ -10,10 +10,10 @@
             $dbImage = new DbImageRepository();
             $entity_name = $_GET['entity_name'];
 
-            if ($dbImage->getImageByEntity($entity_name)) {
+            if ($dbImage->getImagesByEntity($entity_name)) {
                 $response['error'] = false;
                 $response['message'] = 'Images received successfully';
-                $response['data'] = $dbImage->getImageByEntity($entity_name);
+                $response['data'] = $dbImage->getImagesByEntity($entity_name);
             } else {
                 $response['error'] = true;
                 $response['message'] = 'Some error occcurred please try again';

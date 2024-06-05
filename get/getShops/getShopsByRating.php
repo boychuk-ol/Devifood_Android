@@ -7,13 +7,13 @@
     $response = array();
 
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
-        if (isset($_GET['min_rating']) && isset($_GET['max_rating'])) {
+        if (isset($_GET['rating'])) {
+            $dbCategory = new DbCategoryRepository();
             $dbShop = new DbShopRepository();
             $dbImage = new DbImageRepository();
-            $min_rating = $_GET['min_rating'];
-            $max_rating = $_GET['max_rating'];
+            $rating = $_GET['rating'];
 
-            $shops = $dbShop->getShopsWithRatingBetween($min_rating, $max_rating);
+            $shops = $dbShop->getShopsByRating($rating);
             if ($shops) {
                 $response['error'] = false;
                 $response['message'] = 'Shops received successfully';
@@ -38,7 +38,7 @@
             }
         } else {
             $response['error'] = true;
-            $response['message'] = 'Missing parameter: min_rating or max_rating';
+            $response['message'] = 'Missing parameter: rating';
         }
     } else {
         $response['error'] = true;

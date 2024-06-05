@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $dbCourier = new DbCourierRepository();
         $full_name = $_GET['full_name'];
 
-        if ($couriers = $dbCourier->getCouriersByFullName($full_name)) {
+        if ($couriers = $dbCourier->getCourierByFullName($full_name)) {
             $response['error'] = false;
             $response['message'] = 'Courier received successfully';
             $response['data'] = $couriers;

@@ -8,14 +8,14 @@
     $response = array();
 
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
-        if (isset($_GET['price'])) {
+        if (isset($_GET['rating'])) {
             $dbProduct = new DbProductRepository();
             $dbImage = new DbImageRepository();
             $dbShop = new DbShopRepository();
             $dbCategory = new DbCategoryRepository();
-            $price = $_GET['price'];
+            $rating = $_GET['rating'];
 
-            $products = $dbProduct->getProductsWithPriceMoreThan($price);
+            $products = $dbProduct->getProductsByRating($rating);
             if ($products) {
                 $response['error'] = false;
                 $response['message'] = 'Product received successfully';
@@ -57,7 +57,7 @@
             }
         } else {
             $response['error'] = true;
-            $response['message'] = 'Missing parameter: price';
+            $response['message'] = 'Missing parameter: rating';
         }
     } else {
         $response['error'] = true;
@@ -67,4 +67,5 @@
     header('Content-Type: application/json');
     echo json_encode($response);
     exit;
+    
 ?>

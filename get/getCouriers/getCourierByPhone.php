@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $dbCourier = new DbCourierRepository();
         $phone = $_GET['phone'];
 
-        if ($couriers = $dbCourier->getCouriersByPhone($phone)) {
+        if ($couriers = $dbCourier->getCourierByPhone($phone)) {
             $response['error'] = false;
             $response['message'] = 'Courier received successfully';
             $response['data'] = $couriers;
