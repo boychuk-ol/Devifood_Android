@@ -38,7 +38,7 @@
             }
         } else {
             $response['error'] = true;
-            $response['message'] = 'Missing parameter: category';
+            $response['message'] = 'Missing parameter: category_id';
         }
     } else {
         $response['error'] = true;
