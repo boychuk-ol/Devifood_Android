@@ -7,13 +7,13 @@
     $response = array();
 
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
-        if (isset($_GET['category'])) {
+        if (isset($_GET['category_id'])) {
             $dbCategory = new DbCategoryRepository();
             $dbShop = new DbShopRepository();
             $dbImage = new DbImageRepository();
-            $category = $_GET['category'];
+            $category_id = $_GET['category_id'];
 
-            $shops = $dbShop->getShopsByCategory($category);
+            $shops = $dbShop->getShopsByCategory($category_id);
             if ($shops) {
                 $response['error'] = false;
                 $response['message'] = 'Shops received successfully';

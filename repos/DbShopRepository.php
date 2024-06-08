@@ -50,7 +50,7 @@
             }
         }
 
-        function getShopsByAddress($address) {
+        function getShopByAddress($address) {
             $stmt = $this->con->prepare("SELECT s.*
                                         FROM shop s
                                         JOIN locations c ON s.shop_id = c.shop_id
@@ -59,7 +59,7 @@
             $stmt->execute();
             $response = $stmt->get_result();
             
-            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+            $result = $response->fetch_assoc();
             if ($result) {
                 return $result;
             } else {
@@ -135,12 +135,12 @@
             }
         }
 
-        function getShopsByCategory($category) {
+        function getShopsByCategory($category_id) {
             $stmt = $this->con->prepare("SELECT s.*
                                         FROM shop s
                                         JOIN categories c ON s.FK_category_id = c.category_id
-                                        WHERE c.c_name = ?;");
-            $stmt->bind_param("s", $category);
+                                        WHERE c.category_id = ?;");
+            $stmt->bind_param("s", $category_id);
             $stmt->execute();
             $response = $stmt->get_result();
             

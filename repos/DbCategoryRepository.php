@@ -51,6 +51,24 @@
             }
         }
 
+        function getCategoriesByShop($shop_id) {
+            $stmt = $this->con->prepare("SELECT DISTINCT c.*
+                                            FROM categories c
+                                            JOIN products p ON c.category_id = p.FK_category_id
+                                            JOIN shop s ON p.FK_shop_id = s.shop_id
+                                            WHERE c.entity_name = 'product' AND s.shop_id = ?;");
+            $stmt->bind_param("i", $shop_id);
+            $stmt->execute();
+            $response = $stmt->get_result();
+
+            $result = mysqli_fetch_all($response, MYSQLI_ASSOC);
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+
         function getCategoriesBySubcategory($subcategory) {
             $stmt = $this->con->prepare("SELECT * FROM categories WHERE subcat_name = ?");
             $stmt->bind_param("s", $subcategory);

@@ -13,7 +13,7 @@
             $dbImage = new DbImageRepository();
             $address = $_GET['address'];
 
-            $shops = $dbShop->getShopsByAddress($address);
+            $shops = $dbShop->getShopByAddress($address);
             if ($shops) {
                 $response['error'] = false;
                 $response['message'] = 'Shops received successfully';
