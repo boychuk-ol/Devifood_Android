@@ -42,8 +42,26 @@ interface RetrofitAPI {
     fun getShopById(@Query("shop_id") shopId: Int): Call<ShopResponse>
     @GET("get/getShops/getShopsByCategory.php")
     fun getShopsByCategory(@Query("category") category: String): Call<ShopsResponse>
+    @GET("get/getShops/getShopsByNeighborhood.php")
+    fun getShopsByNeighborhood(@Query("neighborhood") neighborhood: String): Call<ShopsResponse>
+    @GET("get/getShops/getShopsByStreet.php")
+    fun getShopsByStreet(@Query("street") street: String): Call<ShopsResponse>
+    @GET("get/getShops/getShopsByCity.php")
+    fun getShopsByCity(@Query("city") city: String): Call<ShopsResponse>
+    @GET("get/getShops/getShopsByRating.php")
+    fun getShopsByRating(@Query("rating") rating: Float): Call<ShopsResponse>
+    @GET("get/getShops/getShopsByReviews.php")
+    fun getShopsByReviews(@Query("reviews") reviews: Int): Call<ShopsResponse>
+    @GET("get/getShops/getShopsBySubcategory.php")
+    fun getShopsBySubcategory(@Query("subcat_name") subcategory: String): Call<ShopsResponse>
+    @GET("get/getShops/getShopsBySubsubcategory.php")
+    fun getShopsBySubsubcategory(@Query("subsubcat_name") subsubcategory: String): Call<ShopsResponse>
     @GET("get/getShops/getShopByName.php")
     fun getShopByName(@Query("name") name: String): Call<ShopResponse>
+    @GET("get/getShops/getShopByProduct.php")
+    fun getShopByProduct(@Query("product_id") productID: String): Call<ShopResponse>
+    @GET("get/getShops/getShopByAdress.php")
+    fun getShopByAddress(@Query("address") address: String): Call<ShopResponse>
     @GET("get/getShops/getShopsWithRatingBetween.php")
     fun getShopsWithRatingBetween(@Query("min_rating") minRating: Float, @Query("max_rating") maxRating: Float): Call<ShopsResponse>
     @GET("get/getShops/getShopsWithRatingLessThan.php")
@@ -93,9 +111,11 @@ interface RetrofitAPI {
 
     //  === CATEGORIES REPOSITORY ===
     @GET("get/getCategories/getCategories.php")
-    fun getCategories(): Call<CategoryResponse>
+    fun getCategories(): Call<CategoriesResponse>
     @GET("get/getCategories/getCategoriesByEntity.php")
     fun getCategoriesByEntity(): Call<CategoriesResponse>
+    @GET("get/getCategories/getCategoriesByShop.php")
+    fun getCategoriesByShop(@Query("shop_id") shopID: Int): Call<CategoriesResponse>
     @GET("get/getCategories/getCategoriesByEntity.php")
     fun getCategoriesByEntity(@Query("entity_name") entityName: String): Call<CategoriesResponse>
     @GET("get/getCategories/getCategoriesByName.php")
@@ -115,7 +135,7 @@ interface RetrofitAPI {
     @GET("get/getCouriers/getCourierByFullName.php")
     fun getCourierByFullName(@Query("full_name") phone: String): Call<CourierResponse>
     @GET("get/getCouriers/getCourierById.php")
-    fun getCouriersById(@Query("courier_id") courierID: String): Call<CourierResponse>
+    fun getCourierById(@Query("courier_id") courierID: Int): Call<CourierResponse>
     @GET("get/getCouriers/getCourierByPhone.php")
     fun getCourierByPhone(@Query("phone") phone: String): Call<CourierResponse>
     @GET("get/getCouriers/getCouriersByWorkArea.php")
@@ -127,7 +147,7 @@ interface RetrofitAPI {
     @GET("get/getLocations/getLocationByFullAddress.php")
     fun getLocationByFullAddress(@Query("full_address") fullAddress: String): Call<LocationResponse>
     @GET("get/getLocations/getLocationById.php")
-    fun getLocationById(@Query("location_id") locationID: String): Call<LocationResponse>
+    fun getLocationById(@Query("location_id") locationID: Int): Call<LocationResponse>
     @GET("get/getLocations/getLocations.php")
     fun getLocations(): Call<LocationsResponse>
     @GET("get/getLocations/getLocationsByCity.php")
@@ -173,11 +193,11 @@ interface RetrofitAPI {
     @GET("get/getOrders/getOrdersWithDeliveryPriceMoreThan.php")
     fun getOrdersWithDeliveryPriceMoreThan(@Query("delivery_price") deliveryPrice: Float): Call<OrdersResponse>
     @GET("get/getOrders/getOrdersWithDeliveryTimeBetween.php")
-    fun getOrdersWithDeliveryTimeBetween(@Query("min_time") minTime: Float, @Query("max_time") maxTime: Float): Call<OrdersResponse>
+    fun getOrdersWithDeliveryTimeBetween(@Query("min_time") minTime: Int, @Query("max_time") maxTime: Int): Call<OrdersResponse>
     @GET("get/getOrders/getOrdersWithDeliveryTimeLessThan.php")
-    fun getOrdersWithDeliveryTimeLessThan(@Query("delivery_time") deliveryTime: Float): Call<OrdersResponse>
+    fun getOrdersWithDeliveryTimeLessThan(@Query("delivery_time") deliveryTime: Int): Call<OrdersResponse>
     @GET("get/getOrders/getOrdersWithDeliveryTimeMoreThan.php")
-    fun getOrdersWithDeliveryTimeMoreThan(@Query("delivery_time") deliveryTime: Float): Call<OrdersResponse>
+    fun getOrdersWithDeliveryTimeMoreThan(@Query("delivery_time") deliveryTime: Int): Call<OrdersResponse>
     @GET("get/getOrders/getOrdersWithTotalPriceBetween.php")
     fun getOrdersWithTotalPriceBetween(@Query("min_price") minPrice: Float, @Query("max_price") maxPrice: Float): Call<OrdersResponse>
     @GET("get/getOrders/getOrdersWithTotalPriceLessThan.php")

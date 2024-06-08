@@ -1,8 +1,11 @@
 package com.example.myapplication.model
 
+import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Category (
     @JsonProperty("category_id")
     @SerializedName("category_id")
@@ -22,7 +25,7 @@ data class Category (
     @JsonProperty("image")
     @SerializedName("image")
     val image: Image?
-)
+): Parcelable
 
 data class CategoryResponse(
     @JsonProperty("error")

@@ -1,8 +1,11 @@
 package com.example.myapplication.model
 
+import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Shop (
     @JsonProperty("shop_id")
     @SerializedName("shop_id")
@@ -12,17 +15,17 @@ data class Shop (
     val shopName: String,
     @JsonProperty("rating")
     @SerializedName("rating")
-    val rating: Float,
+    val rating: Float?,
     @JsonProperty("reviews")
     @SerializedName("reviews")
-    val reviews: Int,
+    val reviews: Int?,
     @JsonProperty("image")
     @SerializedName("image")
     val image: Image,
     @JsonProperty("category")
     @SerializedName("category")
     val category: Category
-)
+): Parcelable
 
 data class ShopsResponse(
     @JsonProperty("error")

@@ -61,26 +61,84 @@ class CategoryService {
             null
         }
     }
-
-//    suspend fun getCategories(): ArrayList<Category>? {
-//        return withContext(Dispatchers.IO) {
-//            try {
-//                val call = apiService?.getImages()
-//                val response = call?.execute()
-//                parseAndHandleCategories(response)
-//            } catch (e: Exception) {
-//                Log.e("API_ERROR", "Network error: ${e.message}")
-//                null
-//            }
-//        }
-//    }
-
     suspend fun getCategoryById(categoryID: Int): Category? {
         return withContext(Dispatchers.IO) {
             try {
                 val call = apiService?.getCategoryById(categoryID)
                 val response = call?.execute()
                 parseAndHandleCategory(response)
+            } catch (e: Exception) {
+                Log.e("API_ERROR", "Network error: ${e.message}")
+                null
+            }
+        }
+    }
+    suspend fun getCategories(): List<Category>? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val call = apiService?.getCategories()
+                val response = call?.execute()
+                parseAndHandleCategories(response)
+            } catch (e: Exception) {
+                Log.e("API_ERROR", "Network error: ${e.message}")
+                null
+            }
+        }
+    }
+    suspend fun getCategoriesByShop(shopID: Int): List<Category>? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val call = apiService?.getCategoriesByShop(shopID)
+                val response = call?.execute()
+                parseAndHandleCategories(response)
+            } catch (e: Exception) {
+                Log.e("API_ERROR", "Network error: ${e.message}")
+                null
+            }
+        }
+    }
+    suspend fun getCategoriesByEntity(entityName: String): List<Category>? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val call = apiService?.getCategoriesByEntity(entityName)
+                val response = call?.execute()
+                parseAndHandleCategories(response)
+            } catch (e: Exception) {
+                Log.e("API_ERROR", "Network error: ${e.message}")
+                null
+            }
+        }
+    }
+    suspend fun getCategoriesByName(name: String): List<Category>? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val call = apiService?.getCategoriesByName(name)
+                val response = call?.execute()
+                parseAndHandleCategories(response)
+            } catch (e: Exception) {
+                Log.e("API_ERROR", "Network error: ${e.message}")
+                null
+            }
+        }
+    }
+    suspend fun getCategoriesBySubcategory(subcategory: String): List<Category>? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val call = apiService?.getCategoriesBySubcategory(subcategory)
+                val response = call?.execute()
+                parseAndHandleCategories(response)
+            } catch (e: Exception) {
+                Log.e("API_ERROR", "Network error: ${e.message}")
+                null
+            }
+        }
+    }
+    suspend fun getCategoriesBySubsubcategory(subsubcategory: String): List<Category>? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val call = apiService?.getCategoriesBySubcategory(subsubcategory)
+                val response = call?.execute()
+                parseAndHandleCategories(response)
             } catch (e: Exception) {
                 Log.e("API_ERROR", "Network error: ${e.message}")
                 null

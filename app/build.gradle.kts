@@ -1,12 +1,21 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-parcelize")
 }
 
 android {
     namespace = "com.example.myapplication"
     compileSdk = 34
-
+//    packaging {
+//        // for JNA and JNA-platform
+//        resources.excludes.add("META-INF/AL2.0")
+//        resources.excludes.add("META-INF/LGPL2.1")
+//        // for byte-buddy
+//        resources.excludes.add("META-INF/licenses/ASM")
+//        resources.pickFirsts.add("win32-x86-64/attach_hotspot_windows.dll")
+//        resources.pickFirsts.add("win32-x86/attach_hotspot_windows.dll")
+//    }
     defaultConfig {
         applicationId = "com.example.myapplication"
         minSdk = 24
@@ -47,6 +56,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    sourceSets {
+        getByName("main").java.srcDirs("build/generated/source/navigation-args")
+    }
+
 }
 
 dependencies {
@@ -59,8 +72,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose.v240rc01)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    //implementation(libs.androidx.navigation.safe.args.gradle.plugin)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -77,6 +89,7 @@ dependencies {
     implementation(libs.jackson.annotations)
     implementation(libs.jackson.databind)
     implementation(libs.ccp)
+    implementation(libs.androidx.constraintlayout)
 
 
     testImplementation(libs.junit)

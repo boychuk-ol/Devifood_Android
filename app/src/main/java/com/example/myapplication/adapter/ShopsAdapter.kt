@@ -1,11 +1,13 @@
 package com.example.myapplication.adapter
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -16,13 +18,13 @@ import com.squareup.picasso.Picasso
 
 class ShopsAdapter(private val arrayList: ArrayList<Shop>): RecyclerView.Adapter<ShopsAdapter.ViewHolder>() {
 
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val shopName: TextView
         val category: TextView
         val rating: TextView
         val reviews: TextView
         val image: ImageView
+        val ratingLayout: LinearLayout
 
         init {
             // Define click listener for the ViewHolder's View
@@ -31,6 +33,7 @@ class ShopsAdapter(private val arrayList: ArrayList<Shop>): RecyclerView.Adapter
             rating = view.findViewById(R.id.rating)
             reviews = view.findViewById(R.id.reviews)
             image = view.findViewById(R.id.shopImage)
+            ratingLayout = view.findViewById(R.id.lowerLayout)
         }
     }
 
@@ -45,18 +48,24 @@ class ShopsAdapter(private val arrayList: ArrayList<Shop>): RecyclerView.Adapter
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         val shop: Shop = arrayList[position]
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
         viewHolder.shopName.text = shop.shopName
         viewHolder.category.text = shop.category.name
+        if(shop.rating == null) {
+            viewHolder.ratingLayout.visibility = View.GONE
+        }
         viewHolder.rating.text = shop.rating.toString()
         viewHolder.reviews.text = shop.reviews.toString()
+        val bundle = Bundle()
+        bundle.putParcelable("shop", shop)
         viewHolder.itemView.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_shopCategoriesFragment)
+            Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_shopCategoriesFragment, bundle)
         )
+        val imageUrl = "http://192.168.1.136/devifood/shopImages/${shop.image.name + shop.image.extension}"
+        Log.d("ImageURL", "Loading image from URL: $imageUrl")
+
         try {
             Picasso.get()
-                .load("http://192.168.1.136/devifood/images/${shop.image.name + shop.image.extension}")
+                .load(imageUrl)
                 .error(R.drawable.google_icon_background)  // Установите изображение для отображения при ошибке
                 .into(viewHolder.image, object : com.squareup.picasso.Callback {
                     override fun onSuccess() {
@@ -76,7 +85,7 @@ class ShopsAdapter(private val arrayList: ArrayList<Shop>): RecyclerView.Adapter
 
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setShops(shops: List<Shop>) {
+    fun setShops(shops: ArrayList<Shop>) {
         arrayList.clear()
         arrayList.addAll(shops)
         notifyDataSetChanged()

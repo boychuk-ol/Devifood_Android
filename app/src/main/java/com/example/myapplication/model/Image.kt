@@ -1,8 +1,11 @@
 package com.example.myapplication.model
 
+import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Image (
     @JsonProperty("image_ID")
     @SerializedName("image_ID")
@@ -19,7 +22,7 @@ data class Image (
     @JsonProperty("full_link")
     @SerializedName("full_link")
     val fullLink: String?
-)
+): Parcelable
 
 data class ImagesResponse (
     @JsonProperty("error")
