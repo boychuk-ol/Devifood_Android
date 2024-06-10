@@ -41,7 +41,7 @@ interface RetrofitAPI {
     @GET("get/getShops/getShopById.php")
     fun getShopById(@Query("shop_id") shopId: Int): Call<ShopResponse>
     @GET("get/getShops/getShopsByCategory.php")
-    fun getShopsByCategory(@Query("category") category: String): Call<ShopsResponse>
+    fun getShopsByCategory(@Query("category_id") categoryID: Int): Call<ShopsResponse>
     @GET("get/getShops/getShopsByNeighborhood.php")
     fun getShopsByNeighborhood(@Query("neighborhood") neighborhood: String): Call<ShopsResponse>
     @GET("get/getShops/getShopsByStreet.php")
@@ -226,7 +226,7 @@ interface RetrofitAPI {
     fun getProductsByProducer(@Query("producer") producer: String): Call<ProductsResponse>
     @GET("get/getProducts/getProductsByRating.php")
     fun getProductsByRating(@Query("rating") rating: Float): Call<ProductsResponse>
-    @GET("get/getProducts/Shop.php")
+    @GET("get/getProducts/getProductsByShop.php")
     fun getProductsByShop(@Query("shop_id") shopID: Int): Call<ProductsResponse>
     @GET("get/getProducts/getProductsBySubcategory.php")
     fun getProductsBySubcategory(@Query("subcategory") subcategory: String): Call<ProductsResponse>

@@ -7,4 +7,5 @@
     <color name="grayCustom2">#EDEDED</color>
     <color name="grayCustom3">#505050</color>
     <color name="customPurple">#ff6750a4</color>
+    <color name="testColor">#505050</color>
 </resources>

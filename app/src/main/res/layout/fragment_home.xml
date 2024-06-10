@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollView1"
+    android:id="@+id/scrollView2"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/material_dynamic_primary80">
@@ -13,77 +13,104 @@
         android:layout_height="match_parent"
         android:background="@color/design_default_color_secondary">
 
-        <TextView
-            android:id="@+id/fastFoodTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fast-food"
-            android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="0dp"/>
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/shopsByCategoryLayout1"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:orientation="vertical"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/frameLayout2">-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fastFoodRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fastFoodTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginTop="10dp"/>
+        <!--            <TextView-->
+        <!--                android:id="@+id/fastFoodTextView"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="10dp"-->
+        <!--                android:layout_marginTop="15dp"-->
+        <!--                android:layout_marginEnd="10dp"-->
+        <!--                android:layout_marginBottom="0dp"-->
+        <!--                android:text="Fast-food"-->
+        <!--                android:textColor="#000000"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent" />-->
 
-        <TextView
-            android:id="@+id/supermarketTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Supermarket"
-            android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fastFoodRecyclerView"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="0dp"/>
+        <!--            <androidx.recyclerview.widget.RecyclerView-->
+        <!--                android:id="@+id/fastFoodRecyclerView"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="0dp"-->
+        <!--                android:layout_marginTop="10dp"-->
+        <!--                android:layout_marginEnd="0dp"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@+id/fastFoodTextView" />-->
+        <!--        </LinearLayout>-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/supermarketRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/supermarketTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginTop="10dp"/>
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/shopsByCategoryLayout2"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:orientation="vertical"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/shopsByCategoryLayout1">-->
 
-        <TextView
-            android:id="@+id/asianTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Asian"
-            android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/supermarketRecyclerView"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="0dp"/>
+        <!--            <TextView-->
+        <!--                android:id="@+id/supermarketTextView"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="10dp"-->
+        <!--                android:layout_marginTop="10dp"-->
+        <!--                android:layout_marginEnd="10dp"-->
+        <!--                android:layout_marginBottom="0dp"-->
+        <!--                android:text="Supermarket"-->
+        <!--                android:textColor="#000000"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@+id/fastFoodRecyclerView" />-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/asianRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/asianTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginTop="10dp"/>
+        <!--            <androidx.recyclerview.widget.RecyclerView-->
+        <!--                android:id="@+id/supermarketRecyclerView"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="0dp"-->
+        <!--                android:layout_marginTop="10dp"-->
+        <!--                android:layout_marginEnd="0dp"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@+id/supermarketTextView" />-->
+        <!--        </LinearLayout>-->
+
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/shopsByCategoryLayout3"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:orientation="vertical"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/shopsByCategoryLayout2">-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/asianTextView"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="10dp"-->
+        <!--                android:layout_marginTop="10dp"-->
+        <!--                android:layout_marginEnd="10dp"-->
+        <!--                android:layout_marginBottom="0dp"-->
+        <!--                android:text="Asian"-->
+        <!--                android:textColor="#000000"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@+id/supermarketRecyclerView" />-->
+
+        <!--            <androidx.recyclerview.widget.RecyclerView-->
+        <!--                android:id="@+id/asianRecyclerView"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="0dp"-->
+        <!--                android:layout_marginTop="10dp"-->
+        <!--                android:layout_marginEnd="0dp"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@+id/asianTextView" />-->
+        <!--        </LinearLayout>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

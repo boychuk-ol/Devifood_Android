@@ -22,58 +22,58 @@ data class Product (
     val fullTitle: String,
     @JsonProperty("short_title")
     @SerializedName("short_title")
-    val shortTitle: String,
+    val shortTitle: String?,
     @JsonProperty("price_with_no_discount")
     @SerializedName("price_with_no_discount")
-    val priceWithNoDiscount: Float,
+    val priceWithNoDiscount: Float?,
     @JsonProperty("actual_price")
     @SerializedName("actual_price")
     val actualPrice: Float,
     @JsonProperty("fats_per_100g")
     @SerializedName("fats_per_100g")
-    val fatsPer100g: Float,
+    val fatsPer100g: Float?,
     @JsonProperty("proteins_per_100g")
     @SerializedName("proteins_per_100g")
-    val proteinsPer100g: Float,
+    val proteinsPer100g: Float?,
     @JsonProperty("carbohydrates_per_100g")
     @SerializedName("carbohydrates_per_100g")
-    val carbohydratesPer100g: Float,
+    val carbohydratesPer100g: Float?,
     @JsonProperty("calories_per_100g")
     @SerializedName("calories_per_100g")
-    val caloriesPer100g: Float,
+    val caloriesPer100g: Float?,
     @JsonProperty("calories_total")
     @SerializedName("calories_total")
-    val caloriesTotal: Int,
+    val caloriesTotal: Int?,
     @JsonProperty("ingridients")
     @SerializedName("ingridients")
-    val ingridients: String,
+    val ingridients: String?,
     @JsonProperty("producer")
     @SerializedName("producer")
-    val producer: String,
+    val producer: String?,
     @JsonProperty("country")
     @SerializedName("country")
-    val country: String,
+    val country: String?,
     @JsonProperty("organic")
     @SerializedName("organic")
-    val organic: Boolean,
+    val organic: Number?,
     @JsonProperty("for_vegeterians")
     @SerializedName("for_vegeterians")
-    val forVegeterians: Boolean,
+    val forVegeterians: Number?,
     @JsonProperty("for_vegans")
     @SerializedName("for_vegans")
-    val forVegans: Boolean,
+    val forVegans: Number?,
     @JsonProperty("weight")
     @SerializedName("weight")
-    val weight: Float,
+    val weight: Float?,
     @JsonProperty("liters")
     @SerializedName("liters")
-    val liters: Float,
+    val liters: Float?,
     @JsonProperty("numb_of_items")
     @SerializedName("numb_of_items")
-    val numberOfItems: Int,
+    val numberOfItems: Int?,
     @JsonProperty("rating")
     @SerializedName("rating")
-    val rating: Float,
+    val rating: Float?,
     @JsonProperty("image")
     @SerializedName("image")
     val image: Image,

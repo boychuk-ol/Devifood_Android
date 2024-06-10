@@ -6,14 +6,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.compose.ui.text.capitalize
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.adapter.ShopsAdapter
+import com.example.myapplication.model.Category
 import com.example.myapplication.model.Shop
 import com.example.myapplication.service.CategoryService
 import com.example.myapplication.service.ImageService
@@ -28,151 +37,119 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val shopService: ShopService = ShopService()
     private val categoryService: CategoryService = CategoryService()
-    private val adapter = ShopsAdapter(ArrayList())
-    private val adapter2 = ShopsAdapter(ArrayList())
-    private val adapter3 = ShopsAdapter(ArrayList())
-    private val adapter4 = ShopsAdapter(ArrayList())
-    private val adapter5 = ShopsAdapter(ArrayList())
+    private val adapters = listOf(
+        ShopsAdapter(ArrayList(), R.layout.shop_item),
+        ShopsAdapter(ArrayList(), R.layout.shop_item),
+        ShopsAdapter(ArrayList(), R.layout.shop_item),
+        ShopsAdapter(ArrayList(), R.layout.shop_item),
+        ShopsAdapter(ArrayList(), R.layout.shop_item)
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.frameLayout2.minHeight = resources.displayMetrics.heightPixels
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.fastFoodRecyclerView.adapter = adapter
-        binding.fastFoodRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.fastFoodRecyclerView.isClickable = true
-
-        binding.supermarketRecyclerView.adapter = adapter2
-        binding.supermarketRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.supermarketRecyclerView.isClickable = true
-
-        binding.asianRecyclerView.adapter = adapter3
-        binding.asianRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.asianRecyclerView.isClickable = true
-
-//        binding.shopList4.adapter = adapter4
-//        binding.shopList4.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        binding.shopList4.isClickable = true
-//
-//        binding.shopList5.adapter = adapter5
-//        binding.shopList5.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        binding.shopList5.isClickable = true
-
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val shopCategories = categoryService.getCategoriesByEntity("shop")
-                var previousViewId: Int? = null
-//                if(shopCategories != null) {
-//                    for (shopCategory in shopCategories) {
-//                        val titleView = createTextView(shopCategory.name.replaceFirstChar {
-//                            if (it.isLowerCase()) it.titlecase(
-//                                Locale.getDefault()
-//                            ) else it.toString()
-//                        })
-//                        titleView.id = View.generateViewId()
-//                        binding.frameLayout2.addView(titleView)
-//
-//                        val shops = shopService.getShopsByCategory(shopCategory.name)
-//                        val recyclerView = createRecyclerView(shops)
-//                        recyclerView.id = View.generateViewId()
-//                        binding.frameLayout2.addView(recyclerView)
-//
-//                        val set = ConstraintSet()
-//                        set.clone(binding.frameLayout2)
-//
-//                        if (previousViewId == null) {
-//                            set.connect(titleView.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 35)
-//                        } else {
-//                            set.connect(titleView.id, ConstraintSet.TOP, previousViewId, ConstraintSet.BOTTOM, 20)
-//                        }
-//
-//                        set.connect(titleView.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 10)
-//                        set.connect(titleView.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 10)
-//
-//                        set.connect(recyclerView.id, ConstraintSet.TOP, titleView.id, ConstraintSet.BOTTOM, 20)
-//                        set.connect(recyclerView.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
-//                        set.connect(recyclerView.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
-//                        set.applyTo(binding.frameLayout2)
-//
-//                        previousViewId = titleView.id
-//                    }
-//                }
-                val shops1 = shopCategories!![0].let { shopService.getShopsByCategory(it.name.capitalize()) }
-                val shops2 = shopCategories[1].let { shopService.getShopsByCategory(it.name.replaceFirstChar {
-                    if (it.isLowerCase()) it.titlecase(
-                        Locale.ROOT
-                    ) else it.toString()
-                }) }
-                val shops3 = shopCategories[2].let { shopService.getShopsByCategory(it.name.replaceFirstChar {
-                    if (it.isLowerCase()) it.titlecase(
-                        Locale.ROOT
-                    ) else it.toString()
-                }) }
-                val shops4 = shopCategories[3].let { shopService.getShopsByCategory(it.name.replaceFirstChar {
-                    if (it.isLowerCase()) it.titlecase(
-                        Locale.ROOT
-                    ) else it.toString()
-                }) }
-                shops1?.let { adapter.setShops(it) }
-                shops2?.let { adapter2.setShops(it) }
-                shops3?.let { adapter3.setShops(it) }
-                shops4?.let { adapter4.setShops(it) }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+                val shopCategories = categoryService.getCategoriesByEntity("shop")?.take(3)
+                val set = ConstraintSet()
+                var previousLayoutId = binding.frameLayout2.id
 
+                if (shopCategories != null) {
+                    for ((index, category) in shopCategories.withIndex()) {
+                        val shopsByCategoryLayout = createShopsCategoryLayout(
+                            category,
+                            adapters[index]
+                        )
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            try {
-                getImages()
+                        // Add the layout first before setting constraints
+                        binding.frameLayout2.addView(shopsByCategoryLayout)
+                        set.clone(binding.frameLayout2)
+
+                        if (previousLayoutId == binding.frameLayout2.id) {
+                            set.connect(shopsByCategoryLayout.id, ConstraintSet.TOP, binding.frameLayout2.id, ConstraintSet.TOP, 10)
+                        } else {
+                            set.connect(shopsByCategoryLayout.id, ConstraintSet.TOP, previousLayoutId, ConstraintSet.BOTTOM, 10)
+                        }
+
+                        set.applyTo(binding.frameLayout2)
+                        previousLayoutId = shopsByCategoryLayout.id
+
+                        val shops = shopService.getShopsByCategory(category.categoryID)
+                        if (shops == null) {
+                            shopsByCategoryLayout.visibility = View.GONE
+                        } else {
+                            adapters[index].setShops(shops)
+                        }
+                    }
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
 
-    fun createTextView(text: String): TextView {
-        return TextView(requireContext()).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+    private fun createShopsCategoryLayout(category: Category, shopAdapter: ShopsAdapter): LinearLayout {
+        val context = this
+
+        val linearLayout = LinearLayout(requireContext()).apply {
+            id = View.generateViewId()
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
             )
-            this.text = text
-            textSize = 18f // Размер текста, можно изменить по необходимости
-            setTextColor(Color.BLACK) // Цвет текста, можно изменить по необходимости
+            orientation = LinearLayout.VERTICAL
+            setPadding(0, 10, 0, 0)
         }
-    }
 
-    fun createRecyclerView(shops: ArrayList<Shop>?): RecyclerView {
-        return RecyclerView(requireContext()).apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            // Установите адаптер для RecyclerView здесь
-            adapter = ShopsAdapter(shops!!)
+        val textView = TextView(requireContext()).apply {
+            id = View.generateViewId()
+            isClickable = true
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(10, 15, 10, 0)
+            }
+            text = category.name.capitalize(Locale.ROOT)
+            setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            setOnClickListener {
+                val bundle = Bundle()
+                bundle.putParcelable("category", category)
+                findNavController().navigate(R.id.action_homeFragment_to_shopsFragment, bundle)
+            }
         }
+
+        val recyclerView = RecyclerView(requireContext()).apply {
+            id = View.generateViewId()
+            adapter = shopAdapter
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            isClickable = true
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(0, 10, 0, 0)
+            }
+        }
+
+        linearLayout.addView(textView)
+        linearLayout.addView(recyclerView)
+
+        return linearLayout
     }
 
-    // Функция для преобразования dp в px
-    fun Int.dpToPx(): Int {
-        return (this * resources.displayMetrics.density).toInt()
-    }
-
-    suspend fun getImages() {
-        val imageService: ImageService = ImageService()
-        val image = imageService.getImageById(2)
-        Log.d("IMAGE_TEST1", image?.imageID.toString())
-        Log.d("IMAGE_TEST2", image?.name.toString())
-        Log.d("IMAGE_TEST3", image?.entityName.toString())
-        Log.d("IMAGE_TEST4", image?.extension.toString())
-        Log.d("IMAGE_TEST5", image?.fullLink.toString())
-
-    }
 
 }

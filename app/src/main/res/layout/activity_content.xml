@@ -21,5 +21,16 @@
         app:navGraph="@navigation/content_data_graph">
     </androidx.fragment.app.FragmentContainerView>
 
+    <Button
+        android:id="@+id/cartButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:text="Cart"
+        app:layout_constraintBottom_toBottomOf="@id/content"
+        app:layout_constraintEnd_toEndOf="@id/content"
+        app:layout_constraintStart_toStartOf="@id/content" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

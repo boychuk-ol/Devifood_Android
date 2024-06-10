@@ -186,7 +186,7 @@ class ShopService {
             }
         }
     }
-    suspend fun getShopsByCategory(categoryID: String): ArrayList<Shop>? {
+    suspend fun getShopsByCategory(categoryID: Int): ArrayList<Shop>? {
         return withContext(Dispatchers.IO) {
             try {
                 val call = apiService?.getShopsByCategory(categoryID)

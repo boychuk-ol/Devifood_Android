@@ -18,6 +18,12 @@
         <action
             android:id="@+id/action_shopCategoriesFragment_to_shopAssortmentFragment"
             app:destination="@id/shopAssortmentFragment" />
+        <argument
+            android:name="category"
+            app:argType="com.example.myapplication.model.Category" />
+        <argument
+            android:name="shop"
+            app:argType="com.example.myapplication.model.Shop" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -30,5 +36,28 @@
         <argument
             android:name="shop"
             app:argType="com.example.myapplication.model.Shop" />
+        <action
+            android:id="@+id/action_homeFragment_to_shopsFragment"
+            app:destination="@id/shopsFragment" />
+        <argument
+            android:name="category"
+            app:argType="com.example.myapplication.model.Category" />
     </fragment>
+    <fragment
+        android:id="@+id/shopsFragment"
+        android:name="com.example.myapplication.fragment.ShopsFragment"
+        android:label="fragment_shops"
+        tools:layout="@layout/fragment_shops" >
+        <action
+            android:id="@+id/action_shopsFragment_to_shopCategoriesFragment"
+            app:destination="@id/shopCategoriesFragment" />
+        <argument
+            android:name="shop"
+            app:argType="com.example.myapplication.model.Shop" />
+    </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.myapplication.fragment.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" /><action android:id="@+id/action_global_cartFragment" app:destination="@id/cartFragment"/>
 </navigation>
