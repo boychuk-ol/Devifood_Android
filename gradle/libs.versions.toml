@@ -39,6 +39,7 @@ navigationSafeArgsGradlePluginVersion = "2.5.3"
 picasso = "2.71828"
 playServicesAuth = "21.2.0"
 playServicesMaps = "18.2.0"
+playServicesMapsVersion = "18.0.2"
 retrofit = "2.9.0"
 uiGraphicsAndroid = "1.6.7"
 uiGraphicsDesktop = "1.6.7"
@@ -87,6 +88,7 @@ androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", ve
 picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+play-services-maps-v1802 = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMapsVersion" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-ui-graphics-android = { group = "androidx.compose.ui", name = "ui-graphics-android", version.ref = "uiGraphicsAndroid" }
 androidx-ui-graphics-desktop = { group = "androidx.compose.ui", name = "ui-graphics-desktop", version.ref = "uiGraphicsDesktop" }

@@ -1,6 +1,9 @@
 package com.example.myapplication.adapter
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,14 +13,21 @@ import android.view.ViewTreeObserver
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.model.Product
+import com.example.myapplication.`object`.RetrofitClient.CLOUD_STORAGE_PRODUCT_IMAGES_URL
 import com.example.myapplication.ui.view_model.CartViewModel
 import com.squareup.picasso.Picasso
 
-class ProductsAdapter(private val arrayList: ArrayList<Product>,
-                      private val cartViewModel: CartViewModel
+
+class ProductsAdapter(
+    private val arrayList: ArrayList<Product>,
+    private val cartViewModel: CartViewModel,
+    private val lifecycleOwner: LifecycleOwner,
+    private val context: Context
 ) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val productName: TextView?
@@ -51,7 +61,7 @@ class ProductsAdapter(private val arrayList: ArrayList<Product>,
         holder.productName?.text = product.fullTitle
         holder.productPrice?.text = product.actualPrice.toInt().toString() + "₴"
         holder.productInfo?.text = product.description
-        holder.deleteButton?.visibility = View.INVISIBLE
+        holder.deleteButton?.visibility = View.GONE
         holder.productCount?.visibility = View.GONE
         holder.removeButton?.visibility = View.GONE
         holder.productInfo?.visibility = View.VISIBLE
@@ -77,32 +87,54 @@ class ProductsAdapter(private val arrayList: ArrayList<Product>,
             holder.addButton.layoutParams = addButtonLayoutParams
         }
 
-        holder.addButton?.setOnClickListener {
+        cartViewModel.isDeleteButtonVisible.observe(lifecycleOwner, Observer { isVisible ->
+            holder.deleteButton?.visibility = if (isVisible) View.VISIBLE else View.GONE
+        })
+
+        holder.deleteButton?.setOnClickListener {
+            deleteProductFromCart(product)
+        }
+
+
+        holder.addButton.setOnClickListener {
             cartViewModel.addProductToCart(product)
             val updatedProductCount = cartViewModel.getProductCount(product)
             holder.productCount?.text = "${updatedProductCount}x"
-            if (updatedProductCount > 0) {
+            if (updatedProductCount == 1 && cartViewModel.isDeleteButtonVisible.value == false) {
                 holder.productCount?.visibility = View.VISIBLE
                 holder.removeButton?.visibility = View.VISIBLE
 
-                val addButtonLayoutParams = holder.addButton?.layoutParams as ViewGroup.MarginLayoutParams
-                val marginPx = (30 * holder.addButton.context.resources.displayMetrics.density).toInt()
-                addButtonLayoutParams.setMargins(marginPx, addButtonLayoutParams.topMargin, addButtonLayoutParams.rightMargin, addButtonLayoutParams.bottomMargin)
+                val addButtonLayoutParams =
+                    holder.addButton?.layoutParams as ViewGroup.MarginLayoutParams
+                val marginPx =
+                    (30 * holder.addButton.context.resources.displayMetrics.density).toInt()
+                addButtonLayoutParams.setMargins(
+                    marginPx,
+                    addButtonLayoutParams.topMargin,
+                    addButtonLayoutParams.rightMargin,
+                    addButtonLayoutParams.bottomMargin
+                )
                 holder.addButton.layoutParams = addButtonLayoutParams
             }
+
         }
 
         holder.removeButton?.setOnClickListener {
-            cartViewModel.removeProductFromCart(product)
-            val updatedProductCount = cartViewModel.getProductCount(product)
+            var updatedProductCount = cartViewModel.getProductCount(product)
             holder.productCount?.text = "${updatedProductCount}x"
-            if (updatedProductCount == 0) {
+            if (updatedProductCount > 1) {
+                cartViewModel.removeProductFromCart(product)
+                updatedProductCount = cartViewModel.getProductCount(product)
+                holder.productCount?.text = "${updatedProductCount}x"
+            } else if (updatedProductCount == 1 && cartViewModel.isDeleteButtonVisible.value == false) {
+                cartViewModel.removeProductFromCart(product)
                 holder.productCount?.visibility = View.GONE
-                holder.removeButton?.visibility = View.GONE
-
+                holder.removeButton.visibility = View.GONE
                 val addButtonLayoutParams = holder.addButton?.layoutParams as ViewGroup.MarginLayoutParams
                 addButtonLayoutParams.setMargins(0, 0, 0, 0)
                 holder.addButton.layoutParams = addButtonLayoutParams
+            } else if (updatedProductCount == 1 && cartViewModel.isDeleteButtonVisible.value == true) {
+                deleteProductFromCart(product)
             }
         }
 
@@ -129,7 +161,7 @@ class ProductsAdapter(private val arrayList: ArrayList<Product>,
             }
         })
 
-        val imageUrl = "http://192.168.1.136/devifood/images/${product.image.name + product.image.extension}"
+        val imageUrl = "${CLOUD_STORAGE_PRODUCT_IMAGES_URL}${product.image.name + product.image.extension}"
         Log.d("ImageURL", "Loading image from URL: $imageUrl")
         try {
             Picasso.get()
@@ -159,6 +191,26 @@ class ProductsAdapter(private val arrayList: ArrayList<Product>,
 
 
 
+    }
+
+    fun deleteProductFromCart(product: Product) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setCancelable(true)
+        builder.setTitle("Delete")
+        builder.setMessage("Are you sure yout want to delete this item?")
+        builder.setPositiveButton("Confirm",
+            DialogInterface.OnClickListener { dialog, which ->
+                cartViewModel.removeProductsFromCart(product)
+                val productsSet: Set<Product> = cartViewModel.cartState.value?.products?.toHashSet() ?: emptySet()
+                setProducts(ArrayList(productsSet))
+            })
+        builder.setNegativeButton(android.R.string.cancel,
+            DialogInterface.OnClickListener { dialog, which ->
+                dialog.dismiss()
+            })
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     @SuppressLint("NotifyDataSetChanged")

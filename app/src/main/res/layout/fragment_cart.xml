@@ -27,9 +27,27 @@
         android:layout_marginLeft="3dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="3dp"
+        android:maxHeight="590dp"
         android:overScrollMode="never"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cartInfo" />
+
+    <Button
+        android:id="@+id/makeOrderButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/helvetica_regular"
+        android:foregroundGravity="center"
+        android:text="Make order"
+        android:textColor="@color/black"
+        app:backgroundTint="#D5E8D4"
+        app:cornerRadius="10dp"
+        app:strokeColor="#82B366"
+        app:strokeWidth="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

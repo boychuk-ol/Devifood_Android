@@ -7,7 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.adapter.ProductsAdapter
@@ -39,20 +43,26 @@ class CartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCartBinding.inflate(inflater, container, false)
+        viewModel.setDeleteButtonVisibility(true)
 
-        productsAdapter = ProductsAdapter(ArrayList(), viewModel)
+        productsAdapter = ProductsAdapter(ArrayList(), viewModel, viewLifecycleOwner, requireContext())
 
-        Log.d("TESTSET", viewModel.cartState.value?.products?.size.toString())
-
+//        val productsSet: Set<Product> = viewModel.cartState.value?.products?.toHashSet() ?: emptySet()
+//        productsAdapter.setProducts(ArrayList(productsSet))
         val productsSet: Set<Product> = viewModel.cartState.value?.products?.toHashSet() ?: emptySet()
         productsAdapter.setProducts(ArrayList(productsSet))
 
-        Log.d("TESTSET", productsSet.size.toString())
 
         binding.cartList.apply {
             adapter = productsAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             isClickable = true
+        }
+
+        binding.makeOrderButton.setOnClickListener {
+            val bundle: Bundle = Bundle()
+            bundle.putParcelable("order", viewModel.cartState.value)
+            findNavController().navigate(R.id.action_cartFragment_to_orderProcessingFragment, bundle)
         }
 
         return binding.root

@@ -13,6 +13,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.model.Shop
+import com.example.myapplication.`object`.RetrofitClient.CLOUD_STORAGE_SHOP_IMAGES_URL
 import com.squareup.picasso.Picasso
 
 class ShopsAdapter(private val arrayList: ArrayList<Shop>, private val layoutResId: Int) : RecyclerView.Adapter<ShopsAdapter.ViewHolder>() {
@@ -81,7 +82,7 @@ class ShopsAdapter(private val arrayList: ArrayList<Shop>, private val layoutRes
             Navigation.createNavigateOnClickListener(R.id.action_shopsFragment_to_shopCategoriesFragment, bundle)
         )
 
-        val imageUrl = "http://192.168.1.136/devifood/shopImages/${shop.image.name + shop.image.extension}"
+        val imageUrl = "${CLOUD_STORAGE_SHOP_IMAGES_URL}${shop.image.name + shop.image.extension}"
         Log.d("ImageURL", "Loading image from URL: $imageUrl")
 
         try {

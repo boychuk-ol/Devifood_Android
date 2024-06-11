@@ -1,6 +1,7 @@
 package com.example.myapplication.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.annotations.SerializedName
 
 data class Location (
@@ -22,12 +23,15 @@ data class Location (
     @JsonProperty("street_number")
     @SerializedName("street_number")
     val streetNumber: String,
+    @JsonProperty("coordinates")
+    @SerializedName("coordinates")
+    val coordinates: LatLng?,
     @JsonProperty("shop")
     @SerializedName("shop")
-    val shop: Shop,
+    val shop: Shop?,
     @JsonProperty("client")
     @SerializedName("client")
-    val client: Client,
+    var client: Client?,
 )
 
 data class LocationsResponse(
@@ -52,4 +56,16 @@ data class LocationResponse(
     @JsonProperty("data")
     @SerializedName("data")
     val data: Location
+)
+
+data class LocationIdResponse(
+    @JsonProperty("error")
+    @SerializedName("error")
+    val error: Boolean,
+    @JsonProperty("message")
+    @SerializedName("message")
+    val message: String,
+    @JsonProperty("location_id")
+    @SerializedName("location_id")
+    val locationId: Int
 )

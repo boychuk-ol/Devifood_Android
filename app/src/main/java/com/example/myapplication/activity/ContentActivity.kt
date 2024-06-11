@@ -12,6 +12,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityContentBinding
 import com.example.myapplication.fragment.CartFragment
 import com.example.myapplication.model.Cart
+import com.example.myapplication.model.Product
 import com.example.myapplication.ui.view_model.CartViewModel
 
 class ContentActivity : AppCompatActivity() {
@@ -36,10 +37,9 @@ class ContentActivity : AppCompatActivity() {
             }
         })
 
+
         binding.cartButton.setOnClickListener { // assuming you have a NavHostFragment with ID 'nav_host_fragment'
             binding.cartButton.visibility = View.INVISIBLE
-            val removeButton = findViewById<ImageButton>(R.id.removeButton)
-            removeButton.visibility = View.VISIBLE
             val navController = findNavController(R.id.contentFragment)
             navController.navigate(R.id.action_global_cartFragment)
 

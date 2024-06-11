@@ -58,6 +58,27 @@ class LocationService {
             null
         }
     }
+
+    suspend fun getLocationsMaxId(): Int? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val call = apiService?.getLocationsMaxId()
+                val response = call?.execute()
+                if (response == null) {
+                    Log.e("API_ERROR", "Response is null")
+                    return@withContext null
+                }
+                if (!response.isSuccessful) {
+                    Log.e("API_ERROR", "Response unsuccessful: ${response.errorBody()?.string()}")
+                    return@withContext null
+                }
+                return@withContext response.body()?.locationId
+            } catch (e: Exception) {
+                Log.e("API_ERROR", "Network error: ${e.message}")
+                return@withContext  null
+            }
+        }
+    }
     suspend fun getLocations(): ArrayList<Location>? {
         return withContext(Dispatchers.IO) {
             try {

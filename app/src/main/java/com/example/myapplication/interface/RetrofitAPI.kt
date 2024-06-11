@@ -13,6 +13,7 @@ import com.example.myapplication.model.Image
 import com.example.myapplication.model.ImageResponse
 import com.example.myapplication.model.ImagesResponse
 import com.example.myapplication.model.Location
+import com.example.myapplication.model.LocationIdResponse
 import com.example.myapplication.model.LocationResponse
 import com.example.myapplication.model.LocationsResponse
 import com.example.myapplication.model.Order
@@ -144,6 +145,8 @@ interface RetrofitAPI {
     fun getCouriersByWorkRegion(@Query("work_region") workRegion: String): Call<CouriersResponse>
 
     //  === LOCATIONS REPOSITORY ===
+    @GET("get/getLocations/getLocationsMaxId.php")
+    fun getLocationsMaxId(): Call<LocationIdResponse>
     @GET("get/getLocations/getLocationByFullAddress.php")
     fun getLocationByFullAddress(@Query("full_address") fullAddress: String): Call<LocationResponse>
     @GET("get/getLocations/getLocationById.php")

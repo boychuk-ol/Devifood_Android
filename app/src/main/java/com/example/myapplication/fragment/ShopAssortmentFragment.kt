@@ -35,12 +35,14 @@ class ShopAssortmentFragment : Fragment() {
 
         binding.productsLayout.minimumHeight = resources.displayMetrics.heightPixels - binding.shopInfoLayout.height - 65
 
-        productAdapter =  ProductsAdapter(ArrayList(), cartViewModel)
+        productAdapter =  ProductsAdapter(ArrayList(), cartViewModel, viewLifecycleOwner, requireContext())
         binding.productsList.apply {
             adapter = productAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             isClickable = false
         }
+
+        cartViewModel.setDeleteButtonVisibility(false)
 
         val category = arguments?.getParcelable<Category>("category")
         if(category != null) {
