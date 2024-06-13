@@ -8,7 +8,7 @@
 
         $dbClient = new DbClientRepository();
 
-        $client_id = $dbClient->getClientMaxId(); 
+        $client_id = $dbClient->getClientsMaxId(); 
         if ($client_id !== null) {
             $response['error'] = false;
             $response['message'] = 'Clients max id received successfully';
