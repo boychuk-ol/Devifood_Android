@@ -83,12 +83,12 @@ class DbProductRepository {
         }
     }
 
-    function getProductsByCategory($category) {
+    function getProductsByCategory($category_id) {
         $stmt = $this->con->prepare("SELECT s.*
                                     FROM products s
                                     JOIN categories c ON s.FK_category_id = c.category_id
-                                    WHERE c.c_name = ?;");
-        $stmt->bind_param("s", $category);
+                                    WHERE c.category_id = ?;");
+        $stmt->bind_param("i", $category_id);
         $stmt->execute();
         $response = $stmt->get_result();
         

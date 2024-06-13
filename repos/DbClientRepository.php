@@ -12,6 +12,14 @@
             $this->con = $db->connect();
         }
 
+        function getLocationsMaxId() {
+            $stmt = $this->con->prepare("SELECT MAX(client_id) as client_Id FROM client");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            return $row ? $row['client_id'] : 1;
+        }
+
         function getClients() {
             $response = $this->con->query("SELECT * FROM client");
             

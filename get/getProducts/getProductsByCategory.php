@@ -9,14 +9,14 @@
 
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
-        if(isset($_GET['category'])) {
+        if(isset($_GET['category_id'])) {
             $dbProduct = new DbProductRepository();
             $dbImage = new DbImageRepository();
             $dbShop = new DbShopRepository();
             $dbCategory = new DbCategoryRepository();
-            $category = $_GET['category'];
+            $category_id = $_GET['category_id'];
 
-            $products = $dbProduct->getProductsByCategory($category);
+            $products = $dbProduct->getProductsByCategory($category_id);
             if ($products) {
                 $response['error'] = false;
                 $response['message'] = 'Product received successfully';
@@ -58,7 +58,7 @@
             }
         } else {
             $response['error'] = true;
-            $response['message'] = 'Missing parameter: country';
+            $response['message'] = 'Missing parameter: category_id';
         }
     } else {
         $response['error'] = true;

@@ -11,6 +11,14 @@
 
             $this->con = $db->connect();
         }
+        
+        function getLocationsMaxId() {
+            $stmt = $this->con->prepare("SELECT MAX(location_id) as location_id FROM locations");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            return $row ? $row['location_id'] : 1;
+        }
 
         function getLocations() {
             $response = $this->con->query("SELECT * FROM locations");
