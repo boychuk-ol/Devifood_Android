@@ -1,2 +1,3 @@
-[images](https://storage.googleapis.com/devifood_images/images/).
-[shop images](https://storage.googleapis.com/devifood_images/shopImages/).
+[images](https://storage.googleapis.com/devifood_images/images/)
+
+[shop images](https://storage.googleapis.com/devifood_images/shopImages/)
