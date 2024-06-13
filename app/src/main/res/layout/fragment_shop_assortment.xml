@@ -136,7 +136,7 @@
                 app:layout_constraintTop_toBottomOf="@id/shopsCategory">
 
 
-                <SearchView
+                <androidx.appcompat.widget.SearchView
                     android:id="@+id/productsSearch"
                     android:layout_width="345dp"
                     android:layout_height="match_parent"
