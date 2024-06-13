@@ -120,7 +120,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shopInfoLayout">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/filterProducts"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -137,24 +137,29 @@
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/productsSearch"
-                    android:layout_width="340dp"
+                    android:layout_width="320dp"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="7dp"
                     android:background="@drawable/borders"
                     android:clickable="true"
                     android:iconifiedByDefault="false"
-                    android:queryBackground="@android:color/transparent" />
+                    android:queryBackground="@android:color/transparent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/filterButtn"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="3dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="5dp"
                     android:background="@drawable/filter_icon"
-                    android:textColorLink="@color/black" />
-            </LinearLayout>
+                    android:textColorLink="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/productsSearch"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.545" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/productsList"
