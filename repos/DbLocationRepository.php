@@ -17,7 +17,7 @@
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
-            return $row ? $row['location_id'] : 1;
+            return $row ? $row['location_id'] : 0;
         }
 
         function getLocations() {
