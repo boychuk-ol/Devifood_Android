@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
             try {
                 val shopCategories = categoryService.getCategoriesByEntity("shop")
                 val set = ConstraintSet()
-                var previousLayoutId = binding.frameLayout2.id
+                var previousLayoutId = binding.filterShopsLayout.id
 
                 if (shopCategories != null) {
                     for ((index, category) in shopCategories.withIndex()) {
@@ -80,7 +80,7 @@ class HomeFragment : Fragment() {
                         set.clone(binding.frameLayout2)
 
                         if (previousLayoutId == binding.frameLayout2.id) {
-                            set.connect(shopsByCategoryLayout.id, ConstraintSet.TOP, binding.frameLayout2.id, ConstraintSet.TOP, 10)
+                            set.connect(shopsByCategoryLayout.id, ConstraintSet.TOP, binding.filterShopsLayout.id, ConstraintSet.BOTTOM, 10)
                         } else {
                             set.connect(shopsByCategoryLayout.id, ConstraintSet.TOP, previousLayoutId, ConstraintSet.BOTTOM, 10)
                         }

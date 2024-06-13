@@ -105,7 +105,7 @@
         android:layout_width="fill_parent"
         android:layout_height="650dp"
         android:layout_marginTop="15dp"
-        android:background="@color/material_dynamic_primary80"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shopInfoLayout">
@@ -114,7 +114,6 @@
             android:id="@+id/productsLayout"
             android:layout_width="match_parent"
             android:layout_height="550dp"
-            android:layout_marginTop="10dp"
             android:background="@drawable/corner_shape"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -138,7 +137,7 @@
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/productsSearch"
-                    android:layout_width="345dp"
+                    android:layout_width="340dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/borders"
                     android:clickable="true"
@@ -147,8 +146,8 @@
 
                 <ImageButton
                     android:id="@+id/filterButtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_marginLeft="6dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="3dp"

@@ -40,7 +40,7 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/shopsSearch"
-            android:layout_width="350dp"
+            android:layout_width="345dp"
             android:layout_height="match_parent"
             android:background="@drawable/borders"
             android:clickable="true"
@@ -49,8 +49,8 @@
 
         <ImageButton
             android:id="@+id/filterButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginLeft="6dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="3dp"

@@ -40,7 +40,8 @@ class ShopCategoriesFragment : Fragment() {
         binding.categoryGrid.layoutManager = GridLayoutManager(requireContext(), 3)
         binding.categoryGrid.isClickable = true
         val shop = arguments?.getParcelable<Shop>("shop")
-        viewLifecycleOwner.lifecycleScope.launch {
+        this.binding.categoriesText.text = shop?.shopName
+            viewLifecycleOwner.lifecycleScope.launch {
             if (shop != null) {
                 val bundle: Bundle = Bundle()
                 bundle.putParcelable("shop", shop)

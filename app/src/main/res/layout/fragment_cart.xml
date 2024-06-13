@@ -13,9 +13,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:fontFamily="@font/dinpro_medium"
         android:text="Cart"
         android:textColor="@color/black"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,15 +25,18 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginLeft="3dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="3dp"
+        android:layout_marginBottom="15dp"
         android:maxHeight="590dp"
         android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/makeOrderButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cartInfo" />
+        app:layout_constraintTop_toBottomOf="@id/cartInfo"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/makeOrderButton"
@@ -44,10 +49,10 @@
         android:textColor="@color/black"
         app:backgroundTint="#D5E8D4"
         app:cornerRadius="10dp"
-        app:strokeColor="#82B366"
-        app:strokeWidth="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="#82B366"
+        app:strokeWidth="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
