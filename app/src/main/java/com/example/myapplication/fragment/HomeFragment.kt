@@ -1,6 +1,7 @@
 package com.example.myapplication.fragment
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -63,7 +64,7 @@ class HomeFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val shopCategories = categoryService.getCategoriesByEntity("shop")?.take(3)
+                val shopCategories = categoryService.getCategoriesByEntity("shop")
                 val set = ConstraintSet()
                 var previousLayoutId = binding.frameLayout2.id
 
@@ -111,17 +112,19 @@ class HomeFragment : Fragment() {
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             orientation = LinearLayout.VERTICAL
-            setPadding(0, 10, 0, 0)
+            setPadding(0, 10, 0, 10)
         }
 
         val textView = TextView(requireContext()).apply {
             id = View.generateViewId()
             isClickable = true
+            textSize = 18F
+            setTypeface(null, Typeface.BOLD)
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                setMargins(10, 15, 10, 0)
+                setMargins(35, 20, 10, 0)
             }
             text = category.name.capitalize(Locale.ROOT)
             setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
@@ -141,7 +144,7 @@ class HomeFragment : Fragment() {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                setMargins(0, 10, 0, 0)
+                setMargins(10, 15, 10, 0)
             }
         }
 

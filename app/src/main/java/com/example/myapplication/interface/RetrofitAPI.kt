@@ -113,8 +113,6 @@ interface RetrofitAPI {
     //  === CATEGORIES REPOSITORY ===
     @GET("get/getCategories/getCategories.php")
     fun getCategories(): Call<CategoriesResponse>
-    @GET("get/getCategories/getCategoriesByEntity.php")
-    fun getCategoriesByEntity(): Call<CategoriesResponse>
     @GET("get/getCategories/getCategoriesByShop.php")
     fun getCategoriesByShop(@Query("shop_id") shopID: Int): Call<CategoriesResponse>
     @GET("get/getCategories/getCategoriesByEntity.php")

@@ -1,9 +1,12 @@
 package com.example.myapplication.fragment
 
+import android.graphics.Typeface
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
-import android.provider.Telephony.Mms.Addr
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.TabStopSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +27,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.StyleSpan
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.IOException
@@ -37,14 +41,12 @@ class ShareLocationFragment : Fragment(), OnMapReadyCallback {
     private val clientViewModel: ClientViewModel by activityViewModels()
     private val locationService: LocationService = LocationService()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentShareLocationBinding.inflate(inflater, container, false)
 
-        binding.locationInfoBlock.visibility = View.INVISIBLE
         val mapFragment = SupportMapFragment.newInstance()
         fragmentManager
             ?.beginTransaction()
@@ -52,8 +54,18 @@ class ShareLocationFragment : Fragment(), OnMapReadyCallback {
             ?.commit()
         mapFragment.getMapAsync(this)
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            locationService.getLocationsMaxId()?.let { clientViewModel.updateLocationsMaxId(it) }
+        }
+        binding.locationInfoBlock.visibility = View.INVISIBLE
+        binding.nextButton.visibility = View.GONE
+
         binding.inputLocation.setOnClickListener {
-            findNavController().navigate(R.id.action_shareLocationFragment_to_sharePhoneFragment)
+            findNavController().navigate(R.id.action_shareLocationFragment_to_inputLocationFragment)
+        }
+
+        binding.nextButton.setOnClickListener {
+            findNavController().navigate(R.id.action_shareLocationFragment_to_homeFragment)
         }
 
         return binding.root
@@ -61,55 +73,112 @@ class ShareLocationFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         googleMap.setOnMapClickListener { latLng ->
-            currentMarker?.remove()
-            currentMarker = googleMap.addMarker(MarkerOptions().position(latLng).title("Selected Location"))
+            if (currentMarker != null) {
+                currentMarker?.remove()
+            }
+            currentMarker = googleMap.addMarker(MarkerOptions().position(latLng))
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-            var address: Address? = getAddressFromLocation(latLng.latitude, latLng.longitude)
-            if(address != null) {
-                locationService
-                val location: Location = Location(1,
-                    address.getAddressLine(0),
-                    address.locality,
-                    address.subLocality,
-                    address.thoroughfare,
-                    address.subThoroughfare,
-                    latLng,
-                    null,
-                    null
-                    )
-                location.client = clientViewModel.client.value
-            }
+            val address: Address? = getAddressFromLocation(latLng.latitude, latLng.longitude)
+            if (address != null) {
+                val upperTitle: String = if (address.thoroughfare == null && (address.locality == null && address.subLocality == null)) {
+                    "Please choose another location. Street or city is unknown\n"
+                } else {
+                    ""
+                }
 
-            val region = address?.subLocality?.let { "Region: $it\n" } ?: ""
-            val street = address?.thoroughfare?.let { "Street: $it\n" } ?: ""
-            val streetNumber = address?.subThoroughfare?.let { "Street number: $it" } ?: ""
-            val title = region + street + streetNumber
-            currentMarker?.title = title
-            binding.locationInfoBlock.apply {
-                visibility = View.VISIBLE
-                text = title
-            }
-            viewLifecycleOwner.lifecycleScope.launch {
-                val locationId: Int? = locationService.getLocationsMaxId()
-                val coordinates: LatLng = clientViewModel.location.value?.coordinates!!
-                val geocoder = Geocoder(requireContext(), Locale.getDefault())
-                val addresses: Address? = geocoder.getFromLocation(coordinates.latitude, coordinates.longitude, 1)?.get(0)
-                if(locationId != null) {
-                    val location: Location? =
-                        addresses?.let { Location(locationId + 1 ,
-                            it.getAddressLine(0),
-                            it.locality,
-                            it.subLocality,
-                            it.thoroughfare,
-                            it.subThoroughfare,
-                            coordinates,
-                            null,
-                            clientViewModel.client.value)
+                val city = address.locality?.let { "City: $it" } ?: "City: Unknown"
+                val region = address.subLocality?.let { "Region: $it" } ?: "Region: Unknown"
+                val street = address.thoroughfare?.let { "Street: $it" } ?: "Street: Unknown"
+                val streetNumber = address.subThoroughfare?.let { "Street number: $it" } ?: "Street number: Unknown"
+
+                val title = upperTitle +
+                        "$city\t$region\n" +
+                        "$street\t$streetNumber"
+
+                val spannableString = SpannableString(title)
+                if (upperTitle.isNotEmpty()) {
+                    spannableString.setSpan(StyleSpan(Typeface.BOLD), 0, upperTitle.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
+                val tabStop1 = 500
+                val tabStop2 = 500
+                spannableString.setSpan(TabStopSpan.Standard(tabStop1), upperTitle.length, title.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                spannableString.setSpan(TabStopSpan.Standard(tabStop2), upperTitle.length, title.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+                binding.locationInfoBlock.apply {
+                    visibility = View.VISIBLE
+                    text = spannableString
+                }
+
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val coordinates = LatLng(address.latitude, address.longitude)
+                    val maxId = clientViewModel.getLocationsMaxId()
+                    if (maxId != null) {
+                        val location = address.let {
+                            Location(
+                                maxId + 1,
+                                it.getAddressLine(0),
+                                it.locality ?: "Unknown",
+                                it.subLocality ?: null,
+                                it.thoroughfare ?: "Unknown",
+                                it.subThoroughfare ?: null,
+                                coordinates,
+                                null,
+                                clientViewModel.client.value,
+                            )
                         }
+                        Log.d("LOCATION_LOG", location.locationID.toString())
+                        Log.d("LOCATION_LOG", location.fullAddress)
+                        Log.d("LOCATION_LOG", location.city)
+                        location.neighborhood?.let { Log.d("LOCATION_LOG", it) }
+                        Log.d("LOCATION_LOG", location.street)
+                        location.streetNumber?.let { Log.d("LOCATION_LOG", it) }
+                        Log.d("LOCATION_LOG", location.coordinates.toString())
+
+                        binding.nextButton.visibility = View.VISIBLE
+                        clientViewModel.updateLocation(location)
+                        Log.d("LOCATION_LOG", clientViewModel.location.value?.coordinates.toString())
+                        Log.d("LOCATION_LOG", clientViewModel.location.value?.fullAddress.toString())
+                    } else {
+                        binding.nextButton.visibility = View.GONE
+                    }
+                    currentMarker?.showInfoWindow()
                 }
             }
-            currentMarker?.showInfoWindow()
         }
+
+        // Check if there's a stored location in the ViewModel
+        clientViewModel.location.value?.let { location ->
+            placeMarkerOnMap(googleMap, location)
+        }
+    }
+
+    private fun placeMarkerOnMap(googleMap: GoogleMap, location: Location) {
+        val latLng = LatLng(location.coordinates!!.latitude, location.coordinates.longitude)
+        if (currentMarker != null) {
+            currentMarker?.remove()
+        }
+        currentMarker = googleMap.addMarker(MarkerOptions().position(latLng))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+
+        val city = location.city.let { "City: $it" } ?: "City: Unknown"
+        val region = location.neighborhood?.let { "Region: $it" } ?: "Region: Unknown"
+        val street = location.street.let { "Street: $it" } ?: "Street: Unknown"
+        val streetNumber = location.streetNumber?.let { "Street number: $it" } ?: "Street number: Unknown"
+
+        val title = "$city\t$region\n$street\t$streetNumber"
+
+        val spannableString = SpannableString(title)
+        val tabStop1 = 500
+        val tabStop2 = 500
+        spannableString.setSpan(TabStopSpan.Standard(tabStop1), 0, title.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(TabStopSpan.Standard(tabStop2), 0, title.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        binding.locationInfoBlock.apply {
+            visibility = View.VISIBLE
+            text = spannableString
+        }
+        clientViewModel.updateLocation(location)
+        binding.nextButton.visibility = View.VISIBLE
     }
 
     private fun getAddressFromLocation(latitude: Double, longitude: Double): Address? {
@@ -119,20 +188,18 @@ class ShareLocationFragment : Fragment(), OnMapReadyCallback {
             if (!addresses.isNullOrEmpty()) {
                 val address: Address = addresses[0]
                 val jsonAddress = JSONObject()
-                jsonAddress.put("country", address.countryName ?: "N/A") // COUNTRY
-                jsonAddress.put("countryCode", address.countryCode ?: "N/A") // COUNTRY CODE
-                jsonAddress.put("adminArea", address.adminArea ?: "N/A") // OBLAS'T
+                jsonAddress.put("country", address.countryName ?: "N/A")
+                jsonAddress.put("countryCode", address.countryCode ?: "N/A")
+                jsonAddress.put("adminArea", address.adminArea ?: "N/A")
                 jsonAddress.put("subAdminArea", address.subAdminArea ?: "N/A")
-                jsonAddress.put("locality", address.locality ?: "N/A") // CITY
-                jsonAddress.put("subLocality", address.subLocality ?: "N/A") // NEIGHBORHOOD
-                jsonAddress.put("thoroughfare", address.thoroughfare ?: "N/A") // STREET
-                jsonAddress.put("subThoroughfare", address.subThoroughfare ?: "N/A") // STREET NUMBER
-                jsonAddress.put("postalCode", address.postalCode ?: "N/A") // POSTAL CODE
+                jsonAddress.put("locality", address.locality ?: "N/A")
+                jsonAddress.put("subLocality", address.subLocality ?: "N/A")
+                jsonAddress.put("thoroughfare", address.thoroughfare ?: "N/A")
+                jsonAddress.put("subThoroughfare", address.subThoroughfare ?: "N/A")
+                jsonAddress.put("postalCode", address.postalCode ?: "N/A")
                 jsonAddress.put("subLocality", address.subLocality ?: "N/A")
 
                 Log.d("Address", jsonAddress.toString())
-                // Here you can update the UI or ViewModel with the address details
-
                 return address
             }
         } catch (e: IOException) {
@@ -142,4 +209,8 @@ class ShareLocationFragment : Fragment(), OnMapReadyCallback {
         return null
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

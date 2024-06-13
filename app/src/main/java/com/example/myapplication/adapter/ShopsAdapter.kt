@@ -36,21 +36,13 @@ class ShopsAdapter(private val arrayList: ArrayList<Shop>, private val layoutRes
                     image = view.findViewById(R.id.categoryImage)
                     ratingLayout = view.findViewById(R.id.lowerLayout)
                 }
-                R.layout.shop_item_full_width -> {
+                else -> {
                     shopName = view.findViewById(R.id.categoryName2)
                     category = view.findViewById(R.id.shopCategory2)
                     rating = view.findViewById(R.id.rating2)
                     reviews = view.findViewById(R.id.reviews2)
                     image = view.findViewById(R.id.categoryImage2)
                     ratingLayout = view.findViewById(R.id.lowerLayout2)
-                }
-                else -> {
-                    shopName = null
-                    category = null
-                    rating = null
-                    reviews = null
-                    image = null
-                    ratingLayout = null
                 }
             }
         }
@@ -75,13 +67,15 @@ class ShopsAdapter(private val arrayList: ArrayList<Shop>, private val layoutRes
         val bundle = Bundle().apply {
             putParcelable("shop", shop)
         }
-        holder.itemView.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_shopCategoriesFragment, bundle)
-        )
-        holder.itemView.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_shopsFragment_to_shopCategoriesFragment, bundle)
-        )
 
+        holder.itemView.setOnClickListener {
+            if (layoutResId == R.layout.shop_item) {
+                Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_shopCategoriesFragment, bundle)
+            } else if (layoutResId == R.layout.shop_item_full_width) {
+                Navigation.findNavController(it).navigate(R.id.action_shopsFragment_to_shopCategoriesFragment, bundle)
+            }
+        }
+        
         val imageUrl = "${CLOUD_STORAGE_SHOP_IMAGES_URL}${shop.image.name + shop.image.extension}"
         Log.d("ImageURL", "Loading image from URL: $imageUrl")
 

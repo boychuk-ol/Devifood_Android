@@ -16,13 +16,13 @@ data class Location (
     val city: String,
     @JsonProperty("neighborhood")
     @SerializedName("neighborhood")
-    val neighborhood: String,
+    val neighborhood: String?,
     @JsonProperty("street")
     @SerializedName("street")
     val street: String,
     @JsonProperty("street_number")
     @SerializedName("street_number")
-    val streetNumber: String,
+    val streetNumber: String?,
     @JsonProperty("coordinates")
     @SerializedName("coordinates")
     val coordinates: LatLng?,

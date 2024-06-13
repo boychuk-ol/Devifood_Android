@@ -5,13 +5,13 @@
     android:id="@+id/scrollView2"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/material_dynamic_primary80">
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/design_default_color_secondary">
+        android:background="@color/white">
 
         <!--        <LinearLayout-->
         <!--            android:id="@+id/shopsByCategoryLayout1"-->
@@ -112,5 +112,40 @@
         <!--                app:layout_constraintTop_toBottomOf="@+id/asianTextView" />-->
         <!--        </LinearLayout>-->
 
+        <LinearLayout
+            android:id="@+id/filterShopsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="7dp"
+            android:paddingTop="2dp"
+            android:paddingRight="7dp"
+            android:paddingBottom="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/frameLayout2">
+
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/shopsSearch"
+                android:layout_width="345dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/borders"
+                android:clickable="true"
+                android:iconifiedByDefault="false"
+                android:queryBackground="@android:color/transparent" />
+
+            <ImageButton
+                android:id="@+id/filterShopsButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/filter_icon"
+                android:textColorLink="@color/black" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

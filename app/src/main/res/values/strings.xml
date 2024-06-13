@@ -11,7 +11,7 @@
     <string name="enter_phone">Enter your phone number</string>
     <string name="phone_login">Login with phone</string>
     <string name="by_continuing">By continuing, you accept our Terms &amp; Conditions,\nPrivacy Policy and Cookies policy</string>
-    <string name="input_location">Input your location</string>
+    <string name="input_location">Input location</string>
     <string name="or_choice">or</string>
     <string name="google_map_view_description">GoogleMapView</string>
     <string name="choose_location">Please choose your location</string>

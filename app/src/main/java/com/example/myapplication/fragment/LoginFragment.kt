@@ -2,15 +2,13 @@ package com.example.myapplication.fragment
 
 //import com.example.myapplication.BuildConfig.SERVER_CLIENT_ID
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.myapplication.activity.ShareDataActivity
+import androidx.navigation.fragment.findNavController
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -24,9 +22,12 @@ class LoginFragment : Fragment() {
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
-        binding.button.setOnClickListener {
-            val intent: Intent = Intent(context, ShareDataActivity::class.java)
-            startActivity(intent)
+        binding.continueButton.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_loginConfirmationFragment)
+        }
+
+        binding.phoneButton.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_sharePhoneFragment)
         }
 
 //        Picasso.get()

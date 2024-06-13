@@ -14,6 +14,7 @@ import com.example.myapplication.adapter.ProductsAdapter
 import com.example.myapplication.databinding.FragmentShopAssortmentBinding
 import com.example.myapplication.model.Category
 import com.example.myapplication.model.Shop
+import com.example.myapplication.`object`.RetrofitClient
 import com.example.myapplication.service.ProductService
 import com.example.myapplication.ui.view_model.CartViewModel
 import com.squareup.picasso.Picasso
@@ -56,7 +57,7 @@ class ShopAssortmentFragment : Fragment() {
         val shop = arguments?.getParcelable<Shop>("shop")
         if(shop != null) {
             try {
-                val imageUrl = "http://192.168.1.136/devifood/shopImages/${shop.image.name + shop.image.extension}"
+                val imageUrl = "${RetrofitClient.CLOUD_STORAGE_SHOP_IMAGES_URL}${shop.image.name + shop.image.extension}"
                 Picasso.get()
                     .load(imageUrl)
                     .error(R.drawable.google_icon_background)

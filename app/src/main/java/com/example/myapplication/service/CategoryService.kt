@@ -102,9 +102,13 @@ class CategoryService {
             try {
                 val call = apiService?.getCategoriesByEntity(entityName)
                 val response = call?.execute()
+                Log.d("API_RESPONSE", response.toString())
+                Log.d("API_RESPONSE", response?.isSuccessful.toString())
+                Log.d("API_RESPONSE", response?.message().toString())
+                Log.d("API_RESPONSE", response?.body().toString())
                 parseAndHandleCategories(response)
             } catch (e: Exception) {
-                Log.e("API_ERROR", "123Network error: ${e.message}")
+                Log.e("API_ERROR", "Network error: ${e.message}")
                 null
             }
         }

@@ -6,17 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.example.myapplication.R
 import com.example.myapplication.activity.ContentActivity
 import com.example.myapplication.model.Image
 import com.example.myapplication.model.Shop
 import com.example.myapplication.databinding.FragmentSharePhoneBinding
 import com.example.myapplication.model.Category
+import com.example.myapplication.ui.view_model.ClientViewModel
 
 
 class SharePhoneFragment : Fragment() {
 
     private var _binding: FragmentSharePhoneBinding? = null
     private val binding get() = _binding!!
+    private val clientViewModel: ClientViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -24,13 +29,8 @@ class SharePhoneFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSharePhoneBinding.inflate(inflater, container, false)
-
-        binding.later.setOnClickListener {
-            val shop: Shop = Shop( 1, "kfc",  4.4F, 512, Image(1,"kfc","kfc1235", ".png", null), Category(1, "fast-food", null, null, "shop", null))
-//            addShop(shop = shop)
-//            testt()
-            val intent: Intent = Intent(context, ContentActivity::class.java)
-            startActivity(intent)
+        binding.codeSender.setOnClickListener {
+            findNavController().navigate(R.id.action_sharePhoneFragment_to_loginConfirmationFragment)
         }
 
         return binding.root

@@ -10,7 +10,7 @@
     tools:context=".fragment.LoginFragment">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button"
+        android:id="@+id/continueButton"
         android:layout_width="265dp"
         android:layout_height="50dp"
         android:fontFamily="@font/helvetica_regular"
@@ -19,13 +19,13 @@
         android:textColor="@color/black"
         app:backgroundTint="#D5E8D4"
         app:cornerRadius="10dp"
+        app:strokeColor="#82B366"
+        app:strokeWidth="2dp"
         app:layout_constraintBottom_toTopOf="@+id/phoneButton"
         app:layout_constraintEnd_toEndOf="@+id/emailInput"
         app:layout_constraintStart_toStartOf="@+id/emailInput"
         app:layout_constraintTop_toBottomOf="@+id/emailInput"
-        app:layout_constraintVertical_bias="0.197"
-        app:strokeColor="#82B366"
-        app:strokeWidth="2dp" />
+        app:layout_constraintVertical_bias="0.197" />
 
     <EditText
         android:id="@+id/emailInput"
@@ -39,9 +39,9 @@
         android:inputType="text|textEmailAddress"
         android:textColor="@color/black"
         android:textColorHint="#656565"
-        app:layout_constraintEnd_toEndOf="@+id/lets_start"
+        app:layout_constraintEnd_toEndOf="@+id/letsStart"
         app:layout_constraintHorizontal_bias="0.478"
-        app:layout_constraintStart_toStartOf="@+id/lets_start"
+        app:layout_constraintStart_toStartOf="@+id/letsStart"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
@@ -55,8 +55,8 @@
         app:backgroundTint="#666666"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/googleSignIn"
-        app:layout_constraintEnd_toEndOf="@+id/button"
-        app:layout_constraintStart_toStartOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="@+id/continueButton"
+        app:layout_constraintStart_toStartOf="@+id/continueButton"
         app:layout_constraintTop_toBottomOf="@+id/emailInput"
         app:layout_constraintVertical_bias="0.914"
         app:strokeColor="#4D4D4D" />
@@ -91,7 +91,7 @@
         app:layout_constraintTop_toTopOf="@+id/googleSignIn" />
 
     <TextView
-        android:id="@+id/by_continuing"
+        android:id="@+id/byContinuing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:foregroundGravity="center"
@@ -122,7 +122,7 @@
         app:layout_constraintVertical_bias="0.504" />
 
     <TextView
-        android:id="@+id/lets_start"
+        android:id="@+id/letsStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/dinpro_medium"

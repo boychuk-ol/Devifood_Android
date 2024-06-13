@@ -72,7 +72,6 @@ dependencies {
     implementation(libs.androidx.navigation.compose.v240rc01)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    //implementation(libs.androidx.navigation.safe.args.gradle.plugin)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -90,6 +89,7 @@ dependencies {
     implementation(libs.jackson.databind)
     implementation(libs.ccp)
     implementation(libs.androidx.constraintlayout)
+    //implementation(libs.interactive.info.window.android)
 
 
     testImplementation(libs.junit)
